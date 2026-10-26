@@ -9,7 +9,8 @@ const State = {
   stiffness: 160,
   damping: 22,
   mass: 1.0,
-  focusedIndex: 1
+  focusedIndex: 1,
+  rules: ['CalculatorApp', 'TaskManagerWindow', 'Steam', 'NVIDIA GeForce Experience']
 };
 
 function hexToRgbaNorm(hex, alpha = 1.0) {
@@ -61,6 +62,10 @@ function updateMockStyles() {
 }
 
 function generateLua() {
+  const rulesLua = State.rules
+    .map(r => `table.insert(Quire.window_rules.float, "${r}")`)
+    .join('\n');
+
   const luaCode = `-- Generated QuireTWM Config
 Quire.config.gaps_in = ${State.gapsIn}
 Quire.config.gaps_out = ${State.gapsOut}
@@ -80,8 +85,7 @@ Quire.config.spring = {
 }
 
 -- Floating Overrides
-table.insert(Quire.window_rules.float, "CalculatorApp")
-table.insert(Quire.window_rules.float, "TaskManagerWindow")`;
+${rulesLua}`;
 
   document.getElementById('lua-code').textContent = luaCode;
 }
@@ -176,7 +180,50 @@ function triggerSpringAnimation() {
   requestAnimationFrame(step);
 }
 
+function renderRules() {
+  const container = document.getElementById('rules-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  State.rules.forEach((rule, idx) => {
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.innerHTML = `<span>${rule}</span><span class="tag-remove" data-idx="${idx}">&times;</span>`;
+    container.appendChild(tag);
+  });
+
+  container.querySelectorAll('.tag-remove').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const i = parseInt(e.target.getAttribute('data-idx'), 10);
+      State.rules.splice(i, 1);
+      renderRules();
+      generateLua();
+    });
+  });
+}
+
+function initRuleInputs() {
+  const input = document.getElementById('input-new-rule');
+  const addBtn = document.getElementById('btn-add-rule');
+
+  function submitRule() {
+    const val = input.value.trim();
+    if (!val || State.rules.includes(val)) return;
+    State.rules.push(val);
+    input.value = '';
+    renderRules();
+    generateLua();
+  }
+
+  addBtn.addEventListener('click', submitRule);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitRule();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   bindControls();
+  renderRules();
+  initRuleInputs();
   updateMockStyles();
 });
