@@ -186,12 +186,13 @@
             <p>Windows matching these class names or executables will automatically float centered.</p>
           </div>
         </div>
-        <div class="rules-tags">
-          <span class="tag">CalculatorApp</span>
-          <span class="tag">TaskManagerWindow</span>
-          <span class="tag">Steam</span>
-          <span class="tag">NVIDIA GeForce Experience</span>
+
+        <div class="rules-input-row">
+          <input type="text" id="input-new-rule" placeholder="Process name or Window Class (e.g. Spotify.exe)">
+          <button id="btn-add-rule" class="btn btn-secondary">Add Rule</button>
         </div>
+
+        <div class="rules-tags" id="rules-container"></div>
       </section>
     </div>
 
