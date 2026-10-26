@@ -21,7 +21,7 @@
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#demo">Ribbon Demo</a>
-        <a href="#config">Config</a>
+        <a href="page2.html">Config Builder</a>
         <a href="#shortcuts">Shortcuts</a>
       </div>
       <div class="nav-actions">
@@ -174,42 +174,6 @@ OK - camera shifted 840px</code></pre>
       </div>
     </section>
 
-    <section id="config" class="config-section">
-      <div class="config-container spotlight-card">
-        <div class="config-bar">
-          <div class="config-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <span class="config-filename">%USERPROFILE%\.quire\config.lua</span>
-          <button class="config-copy copy-btn" data-copy="Quire.config.gaps_in = 8
-Quire.config.gaps_out = 14
-Quire.config.rounding = 10
-Quire.config.spring = { stiffness = 160, damping = 22, mass = 1.0 }">Copy Lua</button>
-        </div>
-        <pre class="config-code"><code><span class="tok-comment">-- Layout and Spring Settings</span>
-Quire.config.gaps_in = <span class="tok-num">8</span>
-Quire.config.gaps_out = <span class="tok-num">14</span>
-Quire.config.rounding = <span class="tok-num">10</span>
-Quire.config.border_size = <span class="tok-num">2</span>
-
-<span class="tok-comment">-- Fluent Accent Color (RGBA)</span>
-Quire.config.border_active = { <span class="tok-num">0.54</span>, <span class="tok-num">0.71</span>, <span class="tok-num">0.98</span>, <span class="tok-num">1.0</span> }
-Quire.config.border_inactive = { <span class="tok-num">0.19</span>, <span class="tok-num">0.20</span>, <span class="tok-num">0.27</span>, <span class="tok-num">0.6</span> }
-
-<span class="tok-comment">-- Spring Solver Dynamics</span>
-Quire.config.spring = {
-    stiffness = <span class="tok-num">160</span>,
-    damping = <span class="tok-num">22</span>,
-    mass = <span class="tok-num">1.0</span>
-}
-
-<span class="tok-comment">-- Quick Column Cycling</span>
-Quire.bind(<span class="tok-str">"Alt+D"</span>, Quire.cycle_column_preset)
-Quire.bind(<span class="tok-str">"Alt+H"</span>, <span class="tok-kw">function</span>() Quire.focus_direction(<span class="tok-str">"left"</span>) <span class="tok-kw">end</span>)
-Quire.bind(<span class="tok-str">"Alt+L"</span>, <span class="tok-kw">function</span>() Quire.focus_direction(<span class="tok-str">"right"</span>) <span class="tok-kw">end</span>)</code></pre>
-      </div>
-    </section>
-
     <section id="shortcuts" class="shortcuts-section">
       <div class="section-heading">
         <h2>Keybindings Reference</h2>
@@ -267,7 +231,7 @@ Quire.bind(<span class="tok-str">"Alt+L"</span>, <span class="tok-kw">function</
         <p>Free, open source under MIT and ready to compile for Windows 10 and 11.</p>
         <div class="download-buttons">
           <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn btn-primary btn-large">Download Release</a>
-          <a href="https://github.com/ewasion137/QuireTWM" class="btn btn-secondary btn-large">Read Source Code</a>
+          <a href="page2.html" class="btn btn-secondary btn-large">Config Builder</a>
         </div>
       </div>
     </section>
@@ -281,7 +245,7 @@ Quire.bind(<span class="tok-str">"Alt+L"</span>, <span class="tok-kw">function</
       </div>
       <div class="footer-links">
         <a href="https://github.com/ewasion137/QuireTWM">GitHub</a>
-        <a href="#config">Documentation</a>
+        <a href="page2.html">Documentation</a>
         <a href="#">License</a>
       </div>
     </div>
