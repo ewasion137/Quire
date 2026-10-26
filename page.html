@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuireTWM | Scrollable Ribbon Window Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-container">
+            <span class="logo">QUIRE<span class="dim">TWM</span></span>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#demo">Ribbon</a>
+                <a href="#install">Install</a>
+                <a href="https://github.com/ewasion137/QuireTWM" target="_blank" class="nav-btn">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <span class="badge">Windows 10 / 11</span>
+                <h1>Infinite canvas.<br>Zero window stacking clutter.</h1>
+                <p class="subtitle">
+                    QuireTWM arranges windows in horizontal columns on an infinite strip.
+                    Written in C++20 and Lua 5.4 with Direct2D hardware rendering.
+                </p>
+                <div class="actions">
+                    <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn primary">Download Binary</a>
+                    <a href="#install" class="btn secondary">Build from source</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="demo-section">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Live Ribbon Model</h2>
+                    <p>Click columns or use the navigation buttons to pan the camera.</p>
+                </div>
+                <div class="viewport-frame">
+                    <div class="ribbon-strip" id="ribbonStrip">
+                        <div class="column active" data-index="0">
+                            <div class="col-head">Column 1 (Active)</div>
+                            <div class="col-body">Terminal</div>
+                        </div>
+                        <div class="column" data-index="1">
+                            <div class="col-head">Column 2</div>
+                            <div class="col-body">Editor</div>
+                        </div>
+                        <div class="column" data-index="2">
+                            <div class="col-head">Column 3</div>
+                            <div class="col-body">Browser</div>
+                        </div>
+                        <div class="column" data-index="3">
+                            <div class="col-head">Column 4</div>
+                            <div class="col-body">Player</div>
+                        </div>
+                        <div class="column" data-index="4">
+                            <div class="col-head">Column 5</div>
+                            <div class="col-body">Chat</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-controls">
+                    <button id="btnPrev" class="ctrl-btn">Left</button>
+                    <span id="colIndicator" class="indicator">Column 1 of 5</span>
+                    <button id="btnNext" class="ctrl-btn">Right</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <div class="grid">
+                    <div class="card">
+                        <h3>Ribbon Layout</h3>
+                        <p>Windows stand side by side in dynamic columns. New windows insert next to your focus without splitting screen space into tiny boxes.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Vertical Workspaces</h3>
+                        <p>Workspaces stack on the vertical axis. Desktops slide up and down with spring physics, keeping layouts isolated.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Direct2D Overlay</h3>
+                        <p>Hardware accelerated render target handles window outlines, HUD pills and the task switcher without input latency.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Lua Configuration</h3>
+                        <p>Edit colors, margins, keys and window rules in pure Lua. The engine reloads changes on disk save without process restarts.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Native IPC Pipe</h3>
+                        <p>A duplex Named Pipe server lets status bars like YASB read workspace states and dispatch layout actions.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Smart Work Area</h3>
+                        <p>Respects system taskbars, auto-hide taskbar modes and custom status bar padding automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="install" class="install-section">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Build</h2>
+                    <p>Requires MSVC v143 or newer and CMake 3.20+.</p>
+                </div>
+                <div class="code-box">
+                    <pre><code>git clone https://github.com/ewasion137/QuireTWM.git
+cd QuireTWM
+cmake -B build -A x64
+cmake --build build --config Release</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container foot-content">
+            <span>QuireTWM by ewasion137</span>
+            <span>Licensed under GPL-2.0</span>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
