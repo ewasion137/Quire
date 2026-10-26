@@ -1,132 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuireTWM | Scrollable Ribbon Window Manager</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuireTWM - Scrollable Tiling for Windows</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="top-nav">
-        <div class="nav-container">
-            <span class="logo">QUIRE<span class="dim">TWM</span></span>
-            <nav>
-                <a href="#features">Features</a>
-                <a href="#demo">Ribbon</a>
-                <a href="#install">Install</a>
-                <a href="https://github.com/ewasion137/QuireTWM" target="_blank" class="nav-btn">GitHub</a>
-            </nav>
+  <div class="ambient-glow"></div>
+
+  <header class="nav-wrapper">
+    <nav class="nav-bar">
+      <div class="logo">
+        <span class="logo-mark"></span>
+        <span class="logo-text">Quire</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#demo">Ribbon Demo</a>
+        <a href="#config">Config</a>
+        <a href="#shortcuts">Shortcuts</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://github.com/ewasion137/QuireTWM" target="_blank" class="btn btn-ghost">GitHub</a>
+        <a href="#download" class="btn btn-primary">Download v1.0</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        <span>Built for Windows 10 and 11</span>
+      </div>
+      <h1 class="hero-title">
+        The infinite ribbon window manager.
+      </h1>
+      <p class="hero-desc">
+        Fast C++20 core, Direct2D hardware overlay and pure Lua 5.4 scripting. Windows glide along a fluid horizontal ribbon backed by sub-stepped numerical springs.
+      </p>
+      <div class="hero-cta">
+        <a href="#download" class="btn btn-primary btn-large">Get QuireTWM</a>
+        <button class="btn btn-secondary btn-large copy-btn" data-copy="git clone https://github.com/ewasion137/QuireTWM.git">
+          <span class="cmd-icon">$</span>
+          <code>git clone quire.git</code>
+          <span class="copy-status">Copy</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+      <div class="demo-header">
+        <div class="demo-status">
+          <span class="pill pill-active">Workspace 1</span>
+          <span class="pill" id="viewport-stats">Column 2/4 (66%)</span>
         </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <span class="badge">Windows 10 / 11</span>
-                <h1>Infinite canvas.<br>Zero window stacking clutter.</h1>
-                <p class="subtitle">
-                    QuireTWM arranges windows in horizontal columns on an infinite strip.
-                    Written in C++20 and Lua 5.4 with Direct2D hardware rendering.
-                </p>
-                <div class="actions">
-                    <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn primary">Download Binary</a>
-                    <a href="#install" class="btn secondary">Build from source</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="demo" class="demo-section">
-            <div class="container">
-                <div class="section-head">
-                    <h2>Live Ribbon Model</h2>
-                    <p>Click columns or use the navigation buttons to pan the camera.</p>
-                </div>
-                <div class="viewport-frame">
-                    <div class="ribbon-strip" id="ribbonStrip">
-                        <div class="column active" data-index="0">
-                            <div class="col-head">Column 1 (Active)</div>
-                            <div class="col-body">Terminal</div>
-                        </div>
-                        <div class="column" data-index="1">
-                            <div class="col-head">Column 2</div>
-                            <div class="col-body">Editor</div>
-                        </div>
-                        <div class="column" data-index="2">
-                            <div class="col-head">Column 3</div>
-                            <div class="col-body">Browser</div>
-                        </div>
-                        <div class="column" data-index="3">
-                            <div class="col-head">Column 4</div>
-                            <div class="col-body">Player</div>
-                        </div>
-                        <div class="column" data-index="4">
-                            <div class="col-head">Column 5</div>
-                            <div class="col-body">Chat</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="demo-controls">
-                    <button id="btnPrev" class="ctrl-btn">Left</button>
-                    <span id="colIndicator" class="indicator">Column 1 of 5</span>
-                    <button id="btnNext" class="ctrl-btn">Right</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="features" class="features-section">
-            <div class="container">
-                <div class="grid">
-                    <div class="card">
-                        <h3>Ribbon Layout</h3>
-                        <p>Windows stand side by side in dynamic columns. New windows insert next to your focus without splitting screen space into tiny boxes.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Vertical Workspaces</h3>
-                        <p>Workspaces stack on the vertical axis. Desktops slide up and down with spring physics, keeping layouts isolated.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Direct2D Overlay</h3>
-                        <p>Hardware accelerated render target handles window outlines, HUD pills and the task switcher without input latency.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Lua Configuration</h3>
-                        <p>Edit colors, margins, keys and window rules in pure Lua. The engine reloads changes on disk save without process restarts.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Native IPC Pipe</h3>
-                        <p>A duplex Named Pipe server lets status bars like YASB read workspace states and dispatch layout actions.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Smart Work Area</h3>
-                        <p>Respects system taskbars, auto-hide taskbar modes and custom status bar padding automatically.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="install" class="install-section">
-            <div class="container">
-                <div class="section-head">
-                    <h2>Build</h2>
-                    <p>Requires MSVC v143 or newer and CMake 3.20+.</p>
-                </div>
-                <div class="code-box">
-                    <pre><code>git clone https://github.com/ewasion137/QuireTWM.git
-cd QuireTWM
-cmake -B build -A x64
-cmake --build build --config Release</code></pre>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container foot-content">
-            <span>QuireTWM by ewasion137</span>
-            <span>Licensed under GPL-2.0</span>
+        <div class="demo-controls">
+          <button class="sim-btn" id="btn-left">&larr; Left</button>
+          <button class="sim-btn" id="btn-preset">Cycle Width</button>
+          <button class="sim-btn" id="btn-right">Right &rarr;</button>
         </div>
-    </footer>
+      </div>
 
-    <script src="app.js"></script>
+      <div class="viewport-stage" id="stage">
+        <div class="ribbon-track" id="track">
+          <div class="column col-large" data-col="1">
+            <div class="win-card active">
+              <div class="card-bar">
+                <span class="win-dot"></span>
+                <span class="card-title">main.cpp - Visual Studio</span>
+              </div>
+              <div class="card-body">
+                <pre><code>SetWinEventHook(EVENT_OBJECT_CREATE, ...);
+InitializeAltTabHook();
+IPCServerThread();</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="column col-medium" data-col="2">
+            <div class="win-card">
+              <div class="card-bar">
+                <span class="win-dot"></span>
+                <span class="card-title">Windows Terminal</span>
+              </div>
+              <div class="card-body">
+                <pre><code>pwsh> .\quirectl.ps1 focus right
+OK - camera shifted 840px</code></pre>
+              </div>
+            </div>
+            <div class="win-card">
+              <div class="card-bar">
+                <span class="win-dot"></span>
+                <span class="card-title">PowerShell</span>
+              </div>
+              <div class="card-body">
+                <pre><code>CPU: 1.2% | RAM: 32MB | D2D: 144Hz</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="column col-medium" data-col="3">
+            <div class="win-card">
+              <div class="card-bar">
+                <span class="win-dot"></span>
+                <span class="card-title">Discord</span>
+              </div>
+              <div class="card-body">
+                <div class="skeleton-block"></div>
+                <div class="skeleton-line"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="column col-large" data-col="4">
+            <div class="win-card">
+              <div class="card-bar">
+                <span class="win-dot"></span>
+                <span class="card-title">Edge DevTools</span>
+              </div>
+              <div class="card-body">
+                <div class="skeleton-grid"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-tip">Interactive simulator. Use the buttons or press Left, Right and Space.</p>
+    </section>
+
+    <section id="features" class="features-section">
+      <div class="section-heading">
+        <h2>Engineered for deep focus</h2>
+        <p>Zero electron bloat. Native Win32 performance with modern design polish.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card spotlight-card">
+          <div class="card-content">
+            <div class="bento-tag">Physics Engine</div>
+            <h3>Sub-Stepped Spring Math</h3>
+            <p>Every camera glide and window resize runs through numerical spring calculations with custom stiffness, damping and mass.</p>
+          </div>
+        </div>
+
+        <div class="bento-card spotlight-card">
+          <div class="card-content">
+            <div class="bento-tag">Graphics</div>
+            <h3>Direct2D Native Overlay</h3>
+            <p>Renders active borders, workspaces HUD and task cards straight to the display plane without lagging your inputs.</p>
+          </div>
+        </div>
+
+        <div class="bento-card spotlight-card">
+          <div class="card-content">
+            <div class="bento-tag">Scriptability</div>
+            <h3>Pure Lua 5.4 Runtime</h3>
+            <p>Bind custom key combos, script workspace events and build external tools through the high-speed named pipe IPC.</p>
+          </div>
+        </div>
+
+        <div class="bento-card spotlight-card">
+          <div class="card-content">
+            <div class="bento-tag">Stability</div>
+            <h3>Zero Window Bleed</h3>
+            <p>Safe coordinates parking keeps background apps alive without losing size, opacity or desktop position on exit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="config" class="config-section">
+      <div class="config-container spotlight-card">
+        <div class="config-bar">
+          <div class="config-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span class="config-filename">%USERPROFILE%\.quire\config.lua</span>
+          <button class="config-copy copy-btn" data-copy="Quire.config.gaps_in = 8
+Quire.config.gaps_out = 14
+Quire.config.rounding = 10
+Quire.config.spring = { stiffness = 160, damping = 22, mass = 1.0 }">Copy Lua</button>
+        </div>
+        <pre class="config-code"><code><span class="tok-comment">-- Layout and Spring Settings</span>
+Quire.config.gaps_in = <span class="tok-num">8</span>
+Quire.config.gaps_out = <span class="tok-num">14</span>
+Quire.config.rounding = <span class="tok-num">10</span>
+Quire.config.border_size = <span class="tok-num">2</span>
+
+<span class="tok-comment">-- Fluent Accent Color (RGBA)</span>
+Quire.config.border_active = { <span class="tok-num">0.54</span>, <span class="tok-num">0.71</span>, <span class="tok-num">0.98</span>, <span class="tok-num">1.0</span> }
+Quire.config.border_inactive = { <span class="tok-num">0.19</span>, <span class="tok-num">0.20</span>, <span class="tok-num">0.27</span>, <span class="tok-num">0.6</span> }
+
+<span class="tok-comment">-- Spring Solver Dynamics</span>
+Quire.config.spring = {
+    stiffness = <span class="tok-num">160</span>,
+    damping = <span class="tok-num">22</span>,
+    mass = <span class="tok-num">1.0</span>
+}
+
+<span class="tok-comment">-- Quick Column Cycling</span>
+Quire.bind(<span class="tok-str">"Alt+D"</span>, Quire.cycle_column_preset)
+Quire.bind(<span class="tok-str">"Alt+H"</span>, <span class="tok-kw">function</span>() Quire.focus_direction(<span class="tok-str">"left"</span>) <span class="tok-kw">end</span>)
+Quire.bind(<span class="tok-str">"Alt+L"</span>, <span class="tok-kw">function</span>() Quire.focus_direction(<span class="tok-str">"right"</span>) <span class="tok-kw">end</span>)</code></pre>
+      </div>
+    </section>
+
+    <section id="shortcuts" class="shortcuts-section">
+      <div class="section-heading">
+        <h2>Keybindings Reference</h2>
+        <p>Ergonomic keys designed for fast keyboard navigation.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="keys-table">
+          <thead>
+            <tr>
+              <th>Combination</th>
+              <th>Action</th>
+              <th>Scope</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>H</kbd> / <kbd>L</kbd></td>
+              <td>Shift focus left or right across columns</td>
+              <td>Ribbon</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>K</kbd> / <kbd>J</kbd></td>
+              <td>Focus up or down in column stack</td>
+              <td>Stack</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> / <kbd>L</kbd></td>
+              <td>Swap column position</td>
+              <td>Ribbon</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>D</kbd></td>
+              <td>Cycle width ratio (100% / 66% / 50%)</td>
+              <td>Column</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>Space</kbd></td>
+              <td>Open native application launcher</td>
+              <td>Global</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>1..9</kbd></td>
+              <td>Switch vertical workspace</td>
+              <td>Workspaces</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="download" class="download-section">
+      <div class="download-card spotlight-card">
+        <h2>Ready for fluid multitasking?</h2>
+        <p>Free, open source under MIT and ready to compile for Windows 10 and 11.</p>
+        <div class="download-buttons">
+          <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn btn-primary btn-large">Download Release</a>
+          <a href="https://github.com/ewasion137/QuireTWM" class="btn btn-secondary btn-large">Read Source Code</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-body">
+      <div class="footer-brand">
+        <span class="logo-mark"></span>
+        <span>QuireTWM &copy; 2026</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/ewasion137/QuireTWM">GitHub</a>
+        <a href="#config">Documentation</a>
+        <a href="#">License</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="web.js"></script>
 </body>
 </html>
