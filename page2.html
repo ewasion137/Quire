@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuireTWM - Documentation and Config Builder</title>
+  <link rel="stylesheet" href="pstyle2.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <header class="nav-wrapper">
+    <nav class="nav-bar">
+      <div class="logo">
+        <a href="index.html" class="logo-link">
+          <span class="logo-mark"></span>
+          <span class="logo-text">Quire</span>
+        </a>
+        <span class="badge-sub">Docs</span>
+      </div>
+      <div class="nav-links">
+        <a href="#geometry">Geometry</a>
+        <a href="#palette">Palette</a>
+        <a href="#springs">Physics</a>
+        <a href="#rules">Rules</a>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-ghost">Home</a>
+        <button id="copy-lua-btn" class="btn btn-primary">Copy config.lua</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="layout-container">
+    <div class="docs-column">
+      <div class="docs-header">
+        <h1>Configuration Guide</h1>
+        <p>QuireTWM reloads live on file save from <code>%USERPROFILE%\.quire\config.lua</code>. Tweak parameters below and observe instant preview updates.</p>
+      </div>
+
+      <section id="geometry" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">01</span>
+          <div>
+            <h2>Grid and Window Geometry</h2>
+            <p>Controls outer margins, inner gaps between stacked clients and D2D rounded corners.</p>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-gaps-out">Outer Margins (gaps_out)</label>
+            <span class="meta-hint">Distance to screen edge</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-gaps-out" min="0" max="32" value="14">
+            <span class="input-val" id="val-gaps-out">14px</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-gaps-in">Inner Gaps (gaps_in)</label>
+            <span class="meta-hint">Distance between columns and stacked windows</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-gaps-in" min="0" max="24" value="8">
+            <span class="input-val" id="val-gaps-in">8px</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-rounding">Corner Radius (rounding)</label>
+            <span class="meta-hint">Direct2D arc rounding</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-rounding" min="0" max="24" value="10">
+            <span class="input-val" id="val-rounding">10px</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-border">Border Thickness (border_size)</label>
+            <span class="meta-hint">Overlay stroke width</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-border" min="1" max="6" value="2">
+            <span class="input-val" id="val-border">2px</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="palette" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">02</span>
+          <div>
+            <h2>Fluent Color Palette</h2>
+            <p>Normalized RGBA tuples from 0.0 to 1.0 driving the Direct2D overlay brush.</p>
+          </div>
+        </div>
+
+        <div class="color-grid">
+          <div class="color-item">
+            <label for="col-active">Active Border</label>
+            <div class="picker-box">
+              <input type="color" id="col-active" value="#8bb4fa">
+              <span class="picker-code" id="hex-active">#8bb4fa</span>
+            </div>
+          </div>
+
+          <div class="color-item">
+            <label for="col-inactive">Inactive Border</label>
+            <div class="picker-box">
+              <input type="color" id="col-inactive" value="#313445">
+              <span class="picker-code" id="hex-inactive">#313445</span>
+            </div>
+          </div>
+
+          <div class="color-item">
+            <label for="col-bg">Window Surface</label>
+            <div class="picker-box">
+              <input type="color" id="col-bg" value="#0d0e14">
+              <span class="picker-code" id="hex-bg">#0d0e14</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="springs" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">03</span>
+          <div>
+            <h2>Numerical Spring Physics</h2>
+            <p>Simulated sub-stepped numerical spring solver for ribbon translation and workspace hops.</p>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-stiffness">Stiffness</label>
+            <span class="meta-hint">Pull force toward targeted position</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-stiffness" min="50" max="300" value="160">
+            <span class="input-val" id="val-stiffness">160</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-damping">Damping</label>
+            <span class="meta-hint">Resistance to eliminate unwanted bounce</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-damping" min="10" max="40" value="22">
+            <span class="input-val" id="val-damping">22</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-mass">Mass</label>
+            <span class="meta-hint">Virtual weight of window viewport</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-mass" min="0.5" max="3.0" step="0.1" value="1.0">
+            <span class="input-val" id="val-mass">1.0</span>
+          </div>
+        </div>
+
+        <div class="spring-action">
+          <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
+        </div>
+      </section>
+
+      <section id="rules" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">04</span>
+          <div>
+            <h2>Floating App Rules</h2>
+            <p>Windows matching these class names or executables will automatically float centered.</p>
+          </div>
+        </div>
+        <div class="rules-tags">
+          <span class="tag">CalculatorApp</span>
+          <span class="tag">TaskManagerWindow</span>
+          <span class="tag">Steam</span>
+          <span class="tag">NVIDIA GeForce Experience</span>
+        </div>
+      </section>
+    </div>
+
+    <aside class="preview-column">
+      <div class="preview-panel">
+        <div class="panel-header">
+          <span class="panel-title">Realtime Canvas Preview</span>
+          <div class="panel-actions">
+            <button id="toggle-active-btn" class="pill pill-active">Active Focused</button>
+          </div>
+        </div>
+
+        <div class="mock-display" id="mock-display">
+          <div class="mock-screen" id="mock-screen">
+            <div class="mock-col mock-col-left" id="mock-col-1">
+              <div class="mock-window" id="win-mock-1">
+                <div class="mock-titlebar">
+                  <span class="mock-btn-dot"></span>
+                  <span class="mock-text">nvim main.lua</span>
+                </div>
+                <div class="mock-content">
+                  <span class="code-line w-60"></span>
+                  <span class="code-line w-80"></span>
+                  <span class="code-line w-40"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mock-col mock-col-right" id="mock-col-2">
+              <div class="mock-window" id="win-mock-2">
+                <div class="mock-titlebar">
+                  <span class="mock-btn-dot"></span>
+                  <span class="mock-text">pwsh terminal</span>
+                </div>
+                <div class="mock-content">
+                  <span class="code-line w-75"></span>
+                  <span class="code-line w-50"></span>
+                </div>
+              </div>
+              <div class="mock-window" id="win-mock-3">
+                <div class="mock-titlebar">
+                  <span class="mock-btn-dot"></span>
+                  <span class="mock-text">build task</span>
+                </div>
+                <div class="mock-content">
+                  <span class="code-line w-30"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="output-box">
+          <div class="output-header">
+            <span>Generated Lua Output</span>
+            <span class="output-tag">Live</span>
+          </div>
+          <pre class="lua-display"><code id="lua-code"></code></pre>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="preview.js"></script>
+</body>
+</html>
