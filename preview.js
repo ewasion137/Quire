@@ -11,6 +11,18 @@ const State = {
   mass: 1.0,
   focusedIndex: 1,
   rules: ['CalculatorApp', 'TaskManagerWindow', 'Steam', 'NVIDIA GeForce Experience']
+  keybinds: [
+    { label: "Focus Left", combo: "Alt+H", lua: 'function() Quire.focus_direction("left") end' },
+    { label: "Focus Right", combo: "Alt+L", lua: 'function() Quire.focus_direction("right") end' },
+    { label: "Focus Up", combo: "Alt+K", lua: 'function() Quire.focus_direction("up") end' },
+    { label: "Focus Down", combo: "Alt+J", lua: 'function() Quire.focus_direction("down") end' },
+    { label: "Move Col Left", combo: "Alt+Shift+H", lua: 'function() Quire.move_column("left") end' },
+    { label: "Move Col Right", combo: "Alt+Shift+L", lua: 'function() Quire.move_column("right") end' },
+    { label: "Cycle Preset", combo: "Alt+D", lua: 'Quire.cycle_column_preset' },
+    { label: "Toggle Float", combo: "Alt+V", lua: 'Quire.toggle_floating' },
+    { label: "Toggle Fullscreen", combo: "Alt+F", lua: 'Quire.toggle_fullscreen' },
+    { label: "Close Client", combo: "Alt+Q", lua: 'function() if Quire.focused_window then wm.close_window(Quire.focused_window) end end' }
+  ]
 };
 
 function hexToRgbaNorm(hex, alpha = 1.0) {
@@ -66,6 +78,10 @@ function generateLua() {
     .map(r => `table.insert(Quire.window_rules.float, "${r}")`)
     .join('\n');
 
+  const bindsLua = State.keybinds
+    .map(b => `Quire.bind("${b.combo}", ${b.lua})`)
+    .join('\n');
+
   const luaCode = `-- Generated QuireTWM Config
 Quire.config.gaps_in = ${State.gapsIn}
 Quire.config.gaps_out = ${State.gapsOut}
@@ -85,7 +101,16 @@ Quire.config.spring = {
 }
 
 -- Floating Overrides
-${rulesLua}`;
+${rulesLua}
+
+-- Navigation and Controls Keybindings
+${bindsLua}
+
+-- Workspaces
+for i = 1, 9 do
+    Quire.bind("Alt+" .. i, function() Quire.switch_workspace(i) end)
+    Quire.bind("Alt+Shift+" .. i, function() Quire.move_to_workspace(i) end)
+end`;
 
   document.getElementById('lua-code').textContent = luaCode;
 }
@@ -221,9 +246,34 @@ function initRuleInputs() {
   });
 }
 
+function renderKeybinds() {
+  const container = document.getElementById('binds-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  State.keybinds.forEach((bind, idx) => {
+    const item = document.createElement('div');
+    item.className = 'bind-item';
+    item.innerHTML = `
+      <span class="bind-label">${bind.label}</span>
+      <input type="text" class="bind-input" data-idx="${idx}" value="${bind.combo}">
+    `;
+    container.appendChild(item);
+  });
+
+  container.querySelectorAll('.bind-input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.getAttribute('data-idx'), 10);
+      State.keybinds[idx].combo = e.target.value.trim();
+      generateLua();
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   bindControls();
   renderRules();
   initRuleInputs();
+  renderKeybinds();
   updateMockStyles();
 });
