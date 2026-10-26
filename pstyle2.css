@@ -567,3 +567,50 @@ input[type="color"]::-webkit-color-swatch {
     position: static;
   }
 }
+
+.binds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.bind-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
+}
+
+.bind-item:focus-within {
+  border-color: var(--border-focus);
+}
+
+.bind-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.bind-input {
+  width: 110px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text);
+  text-align: center;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.bind-input:focus {
+  border-color: var(--border-focus);
+  background: rgba(139, 180, 250, 0.08);
+  box-shadow: 0 0 8px rgba(139, 180, 250, 0.2);
+}
