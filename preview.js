@@ -10,7 +10,7 @@ const State = {
   damping: 22,
   mass: 1.0,
   focusedIndex: 1,
-  rules: ['CalculatorApp', 'TaskManagerWindow', 'Steam', 'NVIDIA GeForce Experience']
+  rules: ['CalculatorApp', 'TaskManagerWindow', 'Steam', 'NVIDIA GeForce Experience'],
   keybinds: [
     { label: "Focus Left", combo: "Alt+H", lua: 'function() Quire.focus_direction("left") end' },
     { label: "Focus Right", combo: "Alt+L", lua: 'function() Quire.focus_direction("right") end' },
@@ -57,7 +57,6 @@ function updateMockStyles() {
     if (!win) return;
     const isFocused = idx === State.focusedIndex - 1;
     const borderColor = isFocused ? State.colActiveHex : State.colInactiveHex;
-    const borderAlpha = isFocused ? '1.0' : '0.6';
 
     win.style.borderRadius = `${State.rounding}px`;
     win.style.border = `${State.borderSize}px solid ${borderColor}`;
