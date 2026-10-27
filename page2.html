@@ -206,6 +206,25 @@
 
         <div class="binds-grid" id="binds-container"></div>
       </section>
+
+      <section id="launcher" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">06</span>
+          <div>
+            <h2>Application Launcher</h2>
+            <p>Configure quick-launch applications triggered by Alt+Space with optional flags and paths.</p>
+          </div>
+        </div>
+
+        <div class="app-input-row">
+          <input type="text" id="app-name" placeholder="Title (e.g. Neovim)">
+          <input type="text" id="app-path" placeholder="Path or binary (e.g. wt.exe)">
+          <input type="text" id="app-args" placeholder="Arguments (e.g. -p PowerShell)">
+          <button id="btn-add-app" class="btn btn-secondary">Add App</button>
+        </div>
+
+        <div class="apps-list" id="apps-container"></div>
+      </section>
     </div>
 
     <aside class="preview-column">
