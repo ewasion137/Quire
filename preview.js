@@ -24,7 +24,7 @@ const State = {
     { label: "Close Client", combo: "Alt+Q", lua: 'function() if Quire.focused_window then wm.close_window(Quire.focused_window) end end' }
   ],
   apps: [
-    { name: "Terminal", path: "wt.exe", args: "" },
+    { name: "Terminal", path: "cmd.exe", args: "" },
     { name: "Explorer", path: "explorer.exe", args: "" },
     { name: "Task Manager", path: "taskmgr.exe", args: "" }
   ]
