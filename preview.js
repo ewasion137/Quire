@@ -22,10 +22,13 @@ const State = {
     { label: "Cycle Preset", combo: "Alt+D", lua: 'Quire.cycle_column_preset' },
     { label: "Toggle Float", combo: "Alt+V", lua: 'Quire.toggle_floating' },
     { label: "Toggle Fullscreen", combo: "Alt+F", lua: 'Quire.toggle_fullscreen' },
-    { label: "Close Client", combo: "Alt+Q", lua: 'function() if Quire.focused_window then wm.close_window(Quire.focused_window) end end' }
+    { label: "Close Client", combo: "Alt+Q", lua: 'function() if Quire.focused_window then wm.close_window(Quire.focused_window) end end' },
+    { label: "Toggle Launcher", combo: "Alt+Space", lua: 'launcher.toggle' },
+    { label: "Spawn / Commit", combo: "Alt+Return", lua: 'function()\n    if Quire.launcher_active then\n        launcher.commit()\n    else\n        wm.spawn("alacritty.exe")\n    end\nend' },
+    { label: "Dismiss Launcher", combo: "Alt+Escape", lua: 'function()\n    if Quire.launcher_active then\n        launcher.toggle()\n    end\nend' }
   ],
   apps: [
-    { name: "Terminal", path: "cmd.exe", args: "" },
+    { name: "Terminal", path: "wt.exe", args: "" },
     { name: "Explorer", path: "explorer.exe", args: "" },
     { name: "Task Manager", path: "taskmgr.exe", args: "" }
   ]
