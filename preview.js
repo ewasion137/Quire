@@ -1,4 +1,5 @@
 const State = {
+  fpsCap: 100,
   gapsOut: 14,
   gapsIn: 8,
   rounding: 10,
@@ -94,6 +95,7 @@ function generateLua() {
     .join(',\n');
 
   const luaCode = `-- Generated QuireTWM Config
+Quire.config.fps_cap = ${State.fpsCap}
 Quire.config.gaps_in = ${State.gapsIn}
 Quire.config.gaps_out = ${State.gapsOut}
 Quire.config.rounding = ${State.rounding}
@@ -133,6 +135,7 @@ end`;
 
 function bindControls() {
   const sliders = [
+    { id: 'input-fps', prop: 'fpsCap', valId: 'val-fps', unit: ' FPS', autoZero: true },
     { id: 'input-gaps-out', prop: 'gapsOut', valId: 'val-gaps-out', unit: 'px' },
     { id: 'input-gaps-in', prop: 'gapsIn', valId: 'val-gaps-in', unit: 'px' },
     { id: 'input-rounding', prop: 'rounding', valId: 'val-rounding', unit: 'px' },
@@ -145,9 +148,15 @@ function bindControls() {
   sliders.forEach(s => {
     const el = document.getElementById(s.id);
     const valEl = document.getElementById(s.valId);
+    if (!el || !valEl) return;
     el.addEventListener('input', (e) => {
-      State[s.prop] = s.float ? parseFloat(e.target.value) : parseInt(e.target.value, 10);
-      valEl.textContent = `${e.target.value}${s.unit}`;
+      const parsed = s.float ? parseFloat(e.target.value) : parseInt(e.target.value, 10);
+      State[s.prop] = parsed;
+      if (s.autoZero && parsed === 0) {
+        valEl.textContent = 'Auto';
+      } else {
+        valEl.textContent = `${e.target.value}${s.unit}`;
+      }
       updateMockStyles();
     });
   });
@@ -161,6 +170,7 @@ function bindControls() {
   pickers.forEach(p => {
     const el = document.getElementById(p.id);
     const hexEl = document.getElementById(p.hexId);
+    if (!el || !hexEl) return;
     el.addEventListener('input', (e) => {
       State[p.prop] = e.target.value;
       hexEl.textContent = e.target.value;
@@ -169,23 +179,30 @@ function bindControls() {
   });
 
   const toggleBtn = document.getElementById('toggle-active-btn');
-  toggleBtn.addEventListener('click', () => {
-    State.focusedIndex = (State.focusedIndex % 3) + 1;
-    toggleBtn.textContent = `Focused: Window ${State.focusedIndex}`;
-    updateMockStyles();
-  });
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      State.focusedIndex = (State.focusedIndex % 3) + 1;
+      toggleBtn.textContent = `Focused: Window ${State.focusedIndex}`;
+      updateMockStyles();
+    });
+  }
 
   const copyBtn = document.getElementById('copy-lua-btn');
-  copyBtn.addEventListener('click', () => {
-    const text = document.getElementById('lua-code').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = copyBtn.textContent;
-      copyBtn.textContent = 'Copied to clipboard!';
-      setTimeout(() => { copyBtn.textContent = orig; }, 1500);
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const text = document.getElementById('lua-code').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = 'Copied to clipboard!';
+        setTimeout(() => { copyBtn.textContent = orig; }, 1500);
+      });
     });
-  });
+  }
 
-  document.getElementById('btn-trigger-spring').addEventListener('click', triggerSpringAnimation);
+  const triggerBtn = document.getElementById('btn-trigger-spring');
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', triggerSpringAnimation);
+  }
 }
 
 function triggerSpringAnimation() {
@@ -246,6 +263,7 @@ function renderRules() {
 function initRuleInputs() {
   const input = document.getElementById('input-new-rule');
   const addBtn = document.getElementById('btn-add-rule');
+  if (!input || !addBtn) return;
 
   function submitRule() {
     const val = input.value.trim();
@@ -320,6 +338,7 @@ function initAppInputs() {
   const pathInput = document.getElementById('app-path');
   const argsInput = document.getElementById('app-args');
   const addBtn = document.getElementById('btn-add-app');
+  if (!nameInput || !pathInput || !argsInput || !addBtn) return;
 
   function submitApp() {
     const name = nameInput.value.trim();
