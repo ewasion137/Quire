@@ -173,6 +173,17 @@
           </div>
         </div>
 
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-fps">Engine Frame Cap (fps_cap)</label>
+            <span class="meta-hint">Target render rate (0 for native monitor refresh rate)</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-fps" min="0" max="240" step="10" value="60">
+            <span class="input-val" id="val-fps">60 FPS</span>
+          </div>
+        </div>
+
         <div class="spring-action">
           <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
         </div>
