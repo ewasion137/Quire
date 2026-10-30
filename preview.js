@@ -1,5 +1,8 @@
 const State = {
-  fpsCap: 100,
+  fpsCap: 0,
+  idleMode: "pulse",
+  closeAnim: "scale",
+  moveEasing: "back",
   gapsOut: 14,
   gapsIn: 8,
   rounding: 10,
@@ -107,6 +110,11 @@ Quire.config.rounding = ${State.rounding}
 Quire.config.border_size = ${State.borderSize}
 Quire.config.default_column_width = 1.0
 
+-- Idle & Animation Effects
+Quire.config.idle_mode = "${State.idleMode}"
+Quire.config.close_anim = "${State.closeAnim}"
+Quire.config.move_easing = "${State.moveEasing}"
+
 -- Palette Colors (RGBA normalized 0.0 to 1.0)
 Quire.config.border_active = ${hexToRgbaNorm(State.colActiveHex, 1.0)}
 Quire.config.border_inactive = ${hexToRgbaNorm(State.colInactiveHex, 0.6)}
@@ -163,6 +171,21 @@ function bindControls() {
         valEl.textContent = `${e.target.value}${s.unit}`;
       }
       updateMockStyles();
+    });
+  });
+
+  const selects = [
+    { id: 'select-idle', prop: 'idleMode' },
+    { id: 'select-close', prop: 'closeAnim' },
+    { id: 'select-easing', prop: 'moveEasing' }
+  ];
+
+  selects.forEach(sel => {
+    const el = document.getElementById(sel.id);
+    if (!el) return;
+    el.addEventListener('change', (e) => {
+      State[sel.prop] = e.target.value;
+      generateLua();
     });
   });
 
