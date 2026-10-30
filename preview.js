@@ -28,7 +28,7 @@ const State = {
     { label: "Toggle Fullscreen", combo: "Alt+F", lua: 'Quire.toggle_fullscreen' },
     { label: "Toggle Launcher", combo: "Alt+Space", lua: 'launcher.toggle' },
     { label: "Commit / Spawn", combo: "Alt+Return", lua: 'launcher.commit' }
-  ]
+  ],
   apps: [
     { name: "Terminal", path: "wt.exe", args: "" },
     { name: "Explorer", path: "explorer.exe", args: "" },
