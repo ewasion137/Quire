@@ -681,3 +681,24 @@ input[type="color"]::-webkit-color-swatch {
     grid-template-columns: 1fr;
   }
 }
+
+.config-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--text);
+  outline: none;
+  cursor: pointer;
+}
+
+.config-select:focus {
+  border-color: var(--border-focus);
+}
+
+.config-select option {
+  background: #0d0f17;
+  color: var(--text);
+}
