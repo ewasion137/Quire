@@ -186,6 +186,54 @@
           </div>
         </div>
 
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="select-idle">Active Window Idle Effect (idle_mode)</label>
+            <span class="meta-hint">Idle border animation style</span>
+          </div>
+          <div class="control-input">
+            <select id="select-idle" class="config-select">
+              <option value="pulse" selected>Pulse</option>
+              <option value="heartbeat">Heartbeat</option>
+              <option value="flash">Flash</option>
+              <option value="wobble">Wobble</option>
+              <option value="shake">Shake</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="select-close">Window Close Animation (close_anim)</label>
+            <span class="meta-hint">Geometry transition on termination</span>
+          </div>
+          <div class="control-input">
+            <select id="select-close" class="config-select">
+              <option value="scale" selected>Scale</option>
+              <option value="slide">Slide</option>
+              <option value="fold">Fold</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="select-easing">Movement Easing (move_easing)</label>
+            <span class="meta-hint">Transfer curve profile</span>
+          </div>
+          <div class="control-input">
+            <select id="select-easing" class="config-select">
+              <option value="back" selected>Back</option>
+              <option value="linear">Linear</option>
+              <option value="ease_in">Ease In</option>
+              <option value="ease_out">Ease Out</option>
+              <option value="ease_in_out">Ease In-Out</option>
+              <option value="bounce">Bounce</option>
+              <option value="elastic">Elastic</option>
+            </select>
+          </div>
+        </div>
+
         <div class="spring-action">
           <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
         </div>
