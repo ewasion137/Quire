@@ -19,14 +19,16 @@ const State = {
     { label: "Focus Down", combo: "Alt+J", lua: 'function() Quire.focus_direction("down") end' },
     { label: "Move Col Left", combo: "Alt+Shift+H", lua: 'function() Quire.move_column("left") end' },
     { label: "Move Col Right", combo: "Alt+Shift+L", lua: 'function() Quire.move_column("right") end' },
+    { label: "Prev Workspace", combo: "Alt+Q", lua: 'function() Quire.cycle_workspace(-1) end' },
+    { label: "Next Workspace", combo: "Alt+E", lua: 'function() Quire.cycle_workspace(1) end' },
+    { label: "Monitor Left", combo: "Alt+Ctrl+H", lua: 'function() Quire.move_window_to_monitor("left") end' },
+    { label: "Monitor Right", combo: "Alt+Ctrl+L", lua: 'function() Quire.move_window_to_monitor("right") end' },
     { label: "Cycle Preset", combo: "Alt+D", lua: 'Quire.cycle_column_preset' },
     { label: "Toggle Float", combo: "Alt+V", lua: 'Quire.toggle_floating' },
     { label: "Toggle Fullscreen", combo: "Alt+F", lua: 'Quire.toggle_fullscreen' },
-    { label: "Close Client", combo: "Alt+Q", lua: 'function() if Quire.focused_window then wm.close_window(Quire.focused_window) end end' },
     { label: "Toggle Launcher", combo: "Alt+Space", lua: 'launcher.toggle' },
-    { label: "Spawn / Commit", combo: "Alt+Return", lua: 'function()\n    if Quire.launcher_active then\n        launcher.commit()\n    else\n        wm.spawn("alacritty.exe")\n    end\nend' },
-    { label: "Dismiss Launcher", combo: "Alt+Escape", lua: 'function()\n    if Quire.launcher_active then\n        launcher.toggle()\n    end\nend' }
-  ],
+    { label: "Commit / Spawn", combo: "Alt+Return", lua: 'launcher.commit' }
+  ]
   apps: [
     { name: "Terminal", path: "wt.exe", args: "" },
     { name: "Explorer", path: "explorer.exe", args: "" },
