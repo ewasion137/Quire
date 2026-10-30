@@ -26,6 +26,8 @@
         <a href="#palette">Palette</a>
         <a href="#springs">Physics</a>
         <a href="#rules">Rules</a>
+        <a href="#keybinds">Keybinds</a>
+        <a href="#launcher">Launcher</a>
       </div>
       <div class="nav-actions">
         <a href="index.html" class="btn btn-ghost">Home</a>
@@ -142,6 +144,17 @@
 
         <div class="control-row">
           <div class="control-meta">
+            <label for="input-fps">Engine Frame Cap (fps_cap)</label>
+            <span class="meta-hint">Target render rate (0 for native monitor refresh rate)</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-fps" min="0" max="240" step="10" value="100">
+            <span class="input-val" id="val-fps">100 FPS</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
             <label for="input-stiffness">Stiffness</label>
             <span class="meta-hint">Pull force toward targeted position</span>
           </div>
@@ -173,17 +186,6 @@
           </div>
         </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-fps">Engine Frame Cap (fps_cap)</label>
-            <span class="meta-hint">Target render rate (0 for native monitor refresh rate)</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-fps" min="0" max="240" step="10" value="60">
-            <span class="input-val" id="val-fps">60 FPS</span>
-          </div>
-        </div>
-
         <div class="spring-action">
           <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
         </div>
@@ -211,7 +213,7 @@
           <span class="card-step">05</span>
           <div>
             <h2>Custom Keybindings</h2>
-            <p>Define hotkeys for navigation, column cycling and window state controls.</p>
+            <p>Define hotkeys for navigation, workspace hopping, monitors and window state controls.</p>
           </div>
         </div>
 
