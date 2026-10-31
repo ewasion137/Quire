@@ -101,8 +101,24 @@
         <div class="card-headline">
           <span class="card-step">02</span>
           <div>
-            <h2>Fluent Color Palette</h2>
-            <p>Normalized RGBA tuples from 0.0 to 1.0 driving the Direct2D overlay brush.</p>
+            <h2>Typography & Fluent Theme</h2>
+            <p>Font families and normalized RGBA colors for Direct2D HUD, borders and overlays.</p>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="select-font">System Font Family (font_family)</label>
+            <span class="meta-hint">DirectWrite hardware text rendering font</span>
+          </div>
+          <div class="control-input">
+            <select id="select-font" class="config-select">
+              <option value="Segoe UI Variable" selected>Segoe UI Variable</option>
+              <option value="Segoe UI">Segoe UI</option>
+              <option value="Cascadia Code">Cascadia Code</option>
+              <option value="JetBrains Mono">JetBrains Mono</option>
+              <option value="Consolas">Consolas</option>
+            </select>
           </div>
         </div>
 
@@ -124,10 +140,26 @@
           </div>
 
           <div class="color-item">
-            <label for="col-bg">Window Surface</label>
+            <label for="col-bg">Theme Background</label>
             <div class="picker-box">
               <input type="color" id="col-bg" value="#0d0e14">
               <span class="picker-code" id="hex-bg">#0d0e14</span>
+            </div>
+          </div>
+
+          <div class="color-item">
+            <label for="col-text">Text Color</label>
+            <div class="picker-box">
+              <input type="color" id="col-text" value="#e6e8ee">
+              <span class="picker-code" id="hex-text">#e6e8ee</span>
+            </div>
+          </div>
+
+          <div class="color-item">
+            <label for="col-dim">Dimmed Text</label>
+            <div class="picker-box">
+              <input type="color" id="col-dim" value="#8c8da6">
+              <span class="picker-code" id="hex-dim">#8c8da6</span>
             </div>
           </div>
         </div>
