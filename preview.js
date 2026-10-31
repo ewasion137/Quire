@@ -26,6 +26,7 @@ const State = {
     { label: "Next Workspace", combo: "Alt+E", lua: 'function() Quire.cycle_workspace(1) end' },
     { label: "Monitor Left", combo: "Alt+Ctrl+H", lua: 'function() Quire.move_window_to_monitor("left") end' },
     { label: "Monitor Right", combo: "Alt+Ctrl+L", lua: 'function() Quire.move_window_to_monitor("right") end' },
+    { label: "Close Window", combo: "Alt+Shift+Q", lua: 'function() if Quire.focused_window then Quire.safe_close_window(Quire.focused_window) end end' },
     { label: "Cycle Preset", combo: "Alt+D", lua: 'Quire.cycle_column_preset' },
     { label: "Toggle Float", combo: "Alt+V", lua: 'Quire.toggle_floating' },
     { label: "Toggle Fullscreen", combo: "Alt+F", lua: 'Quire.toggle_fullscreen' },
