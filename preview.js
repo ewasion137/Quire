@@ -7,6 +7,9 @@ const State = {
   gapsIn: 8,
   rounding: 10,
   borderSize: 2,
+  fontFamily: "Segoe UI Variable",
+  colTextHex: '#e6e8ee',
+  colDimHex: '#8c8da6',
   colActiveHex: '#8bb4fa',
   colInactiveHex: '#313445',
   colBgHex: '#0d0e14',
@@ -116,9 +119,16 @@ Quire.config.idle_mode = "${State.idleMode}"
 Quire.config.close_anim = "${State.closeAnim}"
 Quire.config.move_easing = "${State.moveEasing}"
 
--- Palette Colors (RGBA normalized 0.0 to 1.0)
+-- Border Colors (RGBA normalized 0.0 to 1.0)
 Quire.config.border_active = ${hexToRgbaNorm(State.colActiveHex, 1.0)}
 Quire.config.border_inactive = ${hexToRgbaNorm(State.colInactiveHex, 0.6)}
+
+-- Direct2D Typography & Theme Styling
+Quire.theme.font_family  = "${State.fontFamily}"
+Quire.theme.bg_color     = ${hexToRgbaNorm(State.colBgHex, 0.92)}
+Quire.theme.accent_color = ${hexToRgbaNorm(State.colActiveHex, 1.0)}
+Quire.theme.text_color   = ${hexToRgbaNorm(State.colTextHex, 1.0)}
+Quire.theme.text_dim     = ${hexToRgbaNorm(State.colDimHex, 0.8)}
 
 -- Sub-Stepped Spring Math
 Quire.config.spring = {
@@ -176,6 +186,7 @@ function bindControls() {
   });
 
   const selects = [
+    { id: 'select-font', prop: 'fontFamily' },
     { id: 'select-idle', prop: 'idleMode' },
     { id: 'select-close', prop: 'closeAnim' },
     { id: 'select-easing', prop: 'moveEasing' }
@@ -193,7 +204,9 @@ function bindControls() {
   const pickers = [
     { id: 'col-active', prop: 'colActiveHex', hexId: 'hex-active' },
     { id: 'col-inactive', prop: 'colInactiveHex', hexId: 'hex-inactive' },
-    { id: 'col-bg', prop: 'colBgHex', hexId: 'hex-bg' }
+    { id: 'col-bg', prop: 'colBgHex', hexId: 'hex-bg' },
+    { id: 'col-text', prop: 'colTextHex', hexId: 'hex-text' },
+    { id: 'col-dim', prop: 'colDimHex', hexId: 'hex-dim' }
   ];
 
   pickers.forEach(p => {
