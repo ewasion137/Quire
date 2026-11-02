@@ -702,3 +702,19 @@ input[type="color"]::-webkit-color-swatch {
   background: #0d0f17;
   color: var(--text);
 }
+
+.config-text-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  outline: none;
+  width: 140px;
+}
+
+.config-text-input:focus {
+  border-color: var(--border-focus);
+}
