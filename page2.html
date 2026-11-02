@@ -266,6 +266,51 @@
           </div>
         </div>
 
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-move-duration">Animation Duration (move_duration)</label>
+            <span class="meta-hint">Transition length in seconds</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-move-duration" min="0.1" max="1.0" step="0.02" value="0.28">
+            <span class="input-val" id="val-move-duration">0.28s</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-trackpad-speed">Trackpad Speed (trackpad_speed)</label>
+            <span class="meta-hint">Precision touchpad swipe multiplier</span>
+          </div>
+          <div class="control-input">
+            <input type="range" id="input-trackpad-speed" min="0.5" max="3.0" step="0.1" value="1.2">
+            <span class="input-val" id="val-trackpad-speed">1.2x</span>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="select-focus-mouse">Focus Follows Mouse (focus_follows_mouse)</label>
+            <span class="meta-hint">Focus window under pointer automatically</span>
+          </div>
+          <div class="control-input">
+            <select id="select-focus-mouse" class="config-select">
+              <option value="false" selected>Disabled</option>
+              <option value="true">Enabled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-row">
+          <div class="control-meta">
+            <label for="input-scratchpad-cmd">Scratchpad Command (scratchpad_cmd)</label>
+            <span class="meta-hint">Binary spawned for dropdown terminal</span>
+          </div>
+          <div class="control-input">
+            <input type="text" id="input-scratchpad-cmd" class="config-text-input" value="alacritty.exe">
+          </div>
+        </div>
+
         <div class="spring-action">
           <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
         </div>
