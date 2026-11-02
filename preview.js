@@ -3,16 +3,20 @@ const State = {
   idleMode: "pulse",
   closeAnim: "scale",
   moveEasing: "back",
+  moveDuration: 0.28,
+  trackpadSpeed: 1.2,
+  focusFollowsMouse: false,
+  scratchpadCmd: "alacritty.exe",
   gapsOut: 14,
   gapsIn: 8,
   rounding: 10,
   borderSize: 2,
   fontFamily: "Segoe UI Variable",
-  colTextHex: '#e6e8ee',
-  colDimHex: '#8c8da6',
   colActiveHex: '#8bb4fa',
   colInactiveHex: '#313445',
   colBgHex: '#0d0e14',
+  colTextHex: '#e6e8ee',
+  colDimHex: '#8c8da6',
   stiffness: 160,
   damping: 22,
   mass: 1.0,
@@ -29,6 +33,9 @@ const State = {
     { label: "Next Workspace", combo: "Alt+E", lua: 'function() Quire.cycle_workspace(1) end' },
     { label: "Monitor Left", combo: "Alt+Ctrl+H", lua: 'function() Quire.move_window_to_monitor("left") end' },
     { label: "Monitor Right", combo: "Alt+Ctrl+L", lua: 'function() Quire.move_window_to_monitor("right") end' },
+    { label: "Toggle Overview", combo: "Alt+O", lua: 'Quire.toggle_overview' },
+    { label: "Toggle Scratchpad", combo: "Alt+Grave", lua: 'Quire.toggle_scratchpad' },
+    { label: "Mark Scratchpad", combo: "Alt+Shift+Grave", lua: 'Quire.mark_scratchpad' },
     { label: "Close Window", combo: "Alt+Shift+Q", lua: 'function() if Quire.focused_window then Quire.safe_close_window(Quire.focused_window) end end' },
     { label: "Cycle Preset", combo: "Alt+D", lua: 'Quire.cycle_column_preset' },
     { label: "Toggle Float", combo: "Alt+V", lua: 'Quire.toggle_floating' },
@@ -114,10 +121,14 @@ Quire.config.rounding = ${State.rounding}
 Quire.config.border_size = ${State.borderSize}
 Quire.config.default_column_width = 1.0
 
--- Idle & Animation Effects
+-- Animation & Behavior
 Quire.config.idle_mode = "${State.idleMode}"
 Quire.config.close_anim = "${State.closeAnim}"
 Quire.config.move_easing = "${State.moveEasing}"
+Quire.config.move_duration = ${State.moveDuration.toFixed(2)}
+Quire.config.trackpad_speed = ${State.trackpadSpeed.toFixed(1)}
+Quire.config.focus_follows_mouse = ${State.focusFollowsMouse}
+Quire.config.scratchpad_cmd = "${State.scratchpadCmd}"
 
 -- Border Colors (RGBA normalized 0.0 to 1.0)
 Quire.config.border_active = ${hexToRgbaNorm(State.colActiveHex, 1.0)}
@@ -164,6 +175,8 @@ function bindControls() {
     { id: 'input-gaps-in', prop: 'gapsIn', valId: 'val-gaps-in', unit: 'px' },
     { id: 'input-rounding', prop: 'rounding', valId: 'val-rounding', unit: 'px' },
     { id: 'input-border', prop: 'borderSize', valId: 'val-border', unit: 'px' },
+    { id: 'input-move-duration', prop: 'moveDuration', valId: 'val-move-duration', unit: 's', float: true },
+    { id: 'input-trackpad-speed', prop: 'trackpadSpeed', valId: 'val-trackpad-speed', unit: 'x', float: true },
     { id: 'input-stiffness', prop: 'stiffness', valId: 'val-stiffness', unit: '' },
     { id: 'input-damping', prop: 'damping', valId: 'val-damping', unit: '' },
     { id: 'input-mass', prop: 'mass', valId: 'val-mass', unit: '', float: true }
@@ -189,17 +202,26 @@ function bindControls() {
     { id: 'select-font', prop: 'fontFamily' },
     { id: 'select-idle', prop: 'idleMode' },
     { id: 'select-close', prop: 'closeAnim' },
-    { id: 'select-easing', prop: 'moveEasing' }
+    { id: 'select-easing', prop: 'moveEasing' },
+    { id: 'select-focus-mouse', prop: 'focusFollowsMouse', boolean: true }
   ];
 
   selects.forEach(sel => {
     const el = document.getElementById(sel.id);
     if (!el) return;
     el.addEventListener('change', (e) => {
-      State[sel.prop] = e.target.value;
+      State[sel.prop] = sel.boolean ? (e.target.value === 'true') : e.target.value;
       generateLua();
     });
   });
+
+  const scratchCmd = document.getElementById('input-scratchpad-cmd');
+  if (scratchCmd) {
+    scratchCmd.addEventListener('input', (e) => {
+      State.scratchpadCmd = e.target.value.trim() || 'alacritty.exe';
+      generateLua();
+    });
+  }
 
   const pickers = [
     { id: 'col-active', prop: 'colActiveHex', hexId: 'hex-active' },
