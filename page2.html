@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuireTWM - Documentation and Config Builder</title>
+  <title>QuireTWM - System Configurator</title>
   <link rel="stylesheet" href="pstyle2.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="ambient-glow"></div>
@@ -19,15 +19,14 @@
           <span class="logo-mark"></span>
           <span class="logo-text">Quire</span>
         </a>
-        <span class="badge-sub">Docs</span>
+        <span class="badge-sub">Studio</span>
       </div>
       <div class="nav-links">
-        <a href="#geometry">Geometry</a>
-        <a href="#palette">Palette</a>
-        <a href="#springs">Physics</a>
+        <a href="#geometry">Metrics</a>
+        <a href="#springs">Kinematics</a>
+        <a href="#palette">Interface</a>
         <a href="#rules">Rules</a>
-        <a href="#keybinds">Keybinds</a>
-        <a href="#launcher">Launcher</a>
+        <a href="#keybinds">Hotkeys</a>
       </div>
       <div class="nav-actions">
         <a href="index.html" class="btn btn-ghost">Home</a>
@@ -39,127 +38,62 @@
   <div class="layout-container">
     <div class="docs-column">
       <div class="docs-header">
-        <h1>Configuration Guide</h1>
-        <p>QuireTWM reloads live on file save from <code>%USERPROFILE%\.quire\config.lua</code>. Tweak parameters below and observe instant preview updates.</p>
+        <div class="header-tag">RUNTIME CONFIGURATION</div>
+        <h1>Workspace Engine Studio</h1>
+        <p>Realtime parameters compiler. Values snap mechanically to target intervals and sync straight to the hardware viewport.</p>
       </div>
 
       <section id="geometry" class="param-card">
         <div class="card-headline">
           <span class="card-step">01</span>
           <div>
-            <h2>Grid and Window Geometry</h2>
-            <p>Controls outer margins, inner gaps between stacked clients and D2D rounded corners.</p>
+            <h2>Stage Metrics</h2>
+            <p>Direct2D render boundaries, stack gutters and corner radius rounding.</p>
           </div>
         </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-gaps-out">Outer Margins (gaps_out)</label>
-            <span class="meta-hint">Distance to screen edge</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-gaps-out" min="0" max="32" value="14">
-            <span class="input-val" id="val-gaps-out">14px</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-gaps-in">Inner Gaps (gaps_in)</label>
-            <span class="meta-hint">Distance between columns and stacked windows</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-gaps-in" min="0" max="24" value="8">
-            <span class="input-val" id="val-gaps-in">8px</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-rounding">Corner Radius (rounding)</label>
-            <span class="meta-hint">Direct2D arc rounding</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-rounding" min="0" max="24" value="10">
-            <span class="input-val" id="val-rounding">10px</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-border">Border Thickness (border_size)</label>
-            <span class="meta-hint">Overlay stroke width</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-border" min="1" max="6" value="2">
-            <span class="input-val" id="val-border">2px</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="palette" class="param-card">
-        <div class="card-headline">
-          <span class="card-step">02</span>
-          <div>
-            <h2>Typography & Fluent Theme</h2>
-            <p>Font families and normalized RGBA colors for Direct2D HUD, borders and overlays.</p>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="select-font">System Font Family (font_family)</label>
-            <span class="meta-hint">DirectWrite hardware text rendering font</span>
-          </div>
-          <div class="control-input">
-            <select id="select-font" class="config-select">
-              <option value="Segoe UI Variable" selected>Segoe UI Variable</option>
-              <option value="Segoe UI">Segoe UI</option>
-              <option value="Cascadia Code">Cascadia Code</option>
-              <option value="JetBrains Mono">JetBrains Mono</option>
-              <option value="Consolas">Consolas</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="color-grid">
-          <div class="color-item">
-            <label for="col-active">Active Border</label>
-            <div class="picker-box">
-              <input type="color" id="col-active" value="#8bb4fa">
-              <span class="picker-code" id="hex-active">#8bb4fa</span>
+        <div class="scrubber-group">
+          <div class="scrubber-card" data-param="gapsOut" data-min="0" data-max="48" data-step="2" data-unit="px">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Outer Margin</span>
+              <span class="scrubber-val" id="val-gapsOut">14px</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
             </div>
           </div>
 
-          <div class="color-item">
-            <label for="col-inactive">Inactive Border</label>
-            <div class="picker-box">
-              <input type="color" id="col-inactive" value="#313445">
-              <span class="picker-code" id="hex-inactive">#313445</span>
+          <div class="scrubber-card" data-param="gapsIn" data-min="0" data-max="32" data-step="2" data-unit="px">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Inner Gaps</span>
+              <span class="scrubber-val" id="val-gapsIn">8px</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
             </div>
           </div>
 
-          <div class="color-item">
-            <label for="col-bg">Theme Background</label>
-            <div class="picker-box">
-              <input type="color" id="col-bg" value="#0d0e14">
-              <span class="picker-code" id="hex-bg">#0d0e14</span>
+          <div class="scrubber-card" data-param="rounding" data-min="0" data-max="24" data-step="1" data-unit="px">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Arc Rounding</span>
+              <span class="scrubber-val" id="val-rounding">10px</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
             </div>
           </div>
 
-          <div class="color-item">
-            <label for="col-text">Text Color</label>
-            <div class="picker-box">
-              <input type="color" id="col-text" value="#e6e8ee">
-              <span class="picker-code" id="hex-text">#e6e8ee</span>
+          <div class="scrubber-card" data-param="borderSize" data-min="1" data-max="8" data-step="1" data-unit="px">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Stroke Width</span>
+              <span class="scrubber-val" id="val-borderSize">2px</span>
             </div>
-          </div>
-
-          <div class="color-item">
-            <label for="col-dim">Dimmed Text</label>
-            <div class="picker-box">
-              <input type="color" id="col-dim" value="#8c8da6">
-              <span class="picker-code" id="hex-dim">#8c8da6</span>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
             </div>
           </div>
         </div>
@@ -167,152 +101,111 @@
 
       <section id="springs" class="param-card">
         <div class="card-headline">
-          <span class="card-step">03</span>
+          <span class="card-step">02</span>
           <div>
-            <h2>Numerical Spring Physics</h2>
-            <p>Simulated sub-stepped numerical spring solver for ribbon translation and workspace hops.</p>
+            <h2>Kinematic Spring Solver</h2>
+            <p>Second-order differential equation controls camera slide, rebound and settle velocity.</p>
           </div>
         </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-fps">Engine Frame Cap (fps_cap)</label>
-            <span class="meta-hint">Target render rate (0 for native monitor refresh rate)</span>
+        <div class="scrubber-group">
+          <div class="scrubber-card" data-param="stiffness" data-min="40" data-max="360" data-step="10" data-unit="">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Tension Stiffness (k)</span>
+              <span class="scrubber-val" id="val-stiffness">160</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
+            </div>
           </div>
-          <div class="control-input">
-            <input type="range" id="input-fps" min="0" max="240" step="10" value="100">
-            <span class="input-val" id="val-fps">100 FPS</span>
+
+          <div class="scrubber-card" data-param="damping" data-min="8" data-max="50" data-step="1" data-unit="">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Frictional Damping (c)</span>
+              <span class="scrubber-val" id="val-damping">22</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
+            </div>
+          </div>
+
+          <div class="scrubber-card" data-param="mass" data-min="0.5" data-max="3.0" data-step="0.1" data-unit="kg" data-float="true">
+            <div class="scrubber-header">
+              <span class="scrubber-title">Viewport Mass (m)</span>
+              <span class="scrubber-val" id="val-mass">1.0kg</span>
+            </div>
+            <div class="scrubber-track">
+              <div class="scrubber-ticks"></div>
+              <div class="scrubber-handle"></div>
+            </div>
           </div>
         </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-stiffness">Stiffness</label>
-            <span class="meta-hint">Pull force toward targeted position</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-stiffness" min="50" max="300" value="160">
-            <span class="input-val" id="val-stiffness">160</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-damping">Damping</label>
-            <span class="meta-hint">Resistance to eliminate unwanted bounce</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-damping" min="10" max="40" value="22">
-            <span class="input-val" id="val-damping">22</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-mass">Mass</label>
-            <span class="meta-hint">Virtual weight of window viewport</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-mass" min="0.5" max="3.0" step="0.1" value="1.0">
-            <span class="input-val" id="val-mass">1.0</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="select-idle">Active Window Idle Effect (idle_mode)</label>
-            <span class="meta-hint">Idle border animation style</span>
-          </div>
-          <div class="control-input">
+        <div class="select-grid">
+          <div class="select-field">
+            <label for="select-idle">Focus Idle Shader</label>
             <select id="select-idle" class="config-select">
               <option value="pulse" selected>Pulse</option>
               <option value="heartbeat">Heartbeat</option>
               <option value="flash">Flash</option>
-              <option value="wobble">Wobble</option>
-              <option value="shake">Shake</option>
+              <option value="steady">Steady</option>
             </select>
           </div>
-        </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="select-close">Window Close Animation (close_anim)</label>
-            <span class="meta-hint">Geometry transition on termination</span>
-          </div>
-          <div class="control-input">
+          <div class="select-field">
+            <label for="select-close">Eviction Motion</label>
             <select id="select-close" class="config-select">
-              <option value="scale" selected>Scale</option>
-              <option value="slide">Slide</option>
-              <option value="fold">Fold</option>
+              <option value="scale" selected>Scale Collapse</option>
+              <option value="slide">Horizontal Slide</option>
+              <option value="fold">Alpha Shrink</option>
             </select>
           </div>
-        </div>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="select-easing">Movement Easing (move_easing)</label>
-            <span class="meta-hint">Transfer curve profile</span>
-          </div>
-          <div class="control-input">
-            <select id="select-easing" class="config-select">
-              <option value="back" selected>Back</option>
-              <option value="linear">Linear</option>
-              <option value="ease_in">Ease In</option>
-              <option value="ease_out">Ease Out</option>
-              <option value="ease_in_out">Ease In-Out</option>
-              <option value="bounce">Bounce</option>
-              <option value="elastic">Elastic</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-move-duration">Animation Duration (move_duration)</label>
-            <span class="meta-hint">Transition length in seconds</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-move-duration" min="0.1" max="1.0" step="0.02" value="0.28">
-            <span class="input-val" id="val-move-duration">0.28s</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-trackpad-speed">Trackpad Speed (trackpad_speed)</label>
-            <span class="meta-hint">Precision touchpad swipe multiplier</span>
-          </div>
-          <div class="control-input">
-            <input type="range" id="input-trackpad-speed" min="0.5" max="3.0" step="0.1" value="1.2">
-            <span class="input-val" id="val-trackpad-speed">1.2x</span>
-          </div>
-        </div>
-
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="select-focus-mouse">Focus Follows Mouse (focus_follows_mouse)</label>
-            <span class="meta-hint">Focus window under pointer automatically</span>
-          </div>
-          <div class="control-input">
+          <div class="select-field">
+            <label for="select-focus-mouse">Cursor Tracking</label>
             <select id="select-focus-mouse" class="config-select">
-              <option value="false" selected>Disabled</option>
-              <option value="true">Enabled</option>
+              <option value="false" selected>Click To Focus</option>
+              <option value="true">Focus Follows Mouse</option>
             </select>
           </div>
         </div>
+      </section>
 
-        <div class="control-row">
-          <div class="control-meta">
-            <label for="input-scratchpad-cmd">Scratchpad Command (scratchpad_cmd)</label>
-            <span class="meta-hint">Binary spawned for dropdown terminal</span>
-          </div>
-          <div class="control-input">
-            <input type="text" id="input-scratchpad-cmd" class="config-text-input" value="alacritty.exe">
+      <section id="palette" class="param-card">
+        <div class="card-headline">
+          <span class="card-step">03</span>
+          <div>
+            <h2>Color Spectrum and DirectWrite</h2>
+            <p>Linear RGB color definitions for hardware swapchain rendering.</p>
           </div>
         </div>
 
-        <div class="spring-action">
-          <button id="btn-trigger-spring" class="btn btn-secondary">Test Spring Motion</button>
+        <div class="color-grid">
+          <div class="color-item">
+            <div class="picker-top">
+              <span class="color-title">Active Border</span>
+              <span class="picker-code" id="hex-active">#8bb4fa</span>
+            </div>
+            <input type="color" id="col-active" value="#8bb4fa">
+          </div>
+
+          <div class="color-item">
+            <div class="picker-top">
+              <span class="color-title">Inactive Border</span>
+              <span class="picker-code" id="hex-inactive">#313445</span>
+            </div>
+            <input type="color" id="col-inactive" value="#313445">
+          </div>
+
+          <div class="color-item">
+            <div class="picker-top">
+              <span class="color-title">Client Canvas</span>
+              <span class="picker-code" id="hex-bg">#0d0e14</span>
+            </div>
+            <input type="color" id="col-bg" value="#0d0e14">
+          </div>
         </div>
       </section>
 
@@ -321,7 +214,7 @@
           <span class="card-step">04</span>
           <div>
             <h2>Floating App Rules</h2>
-            <p>Windows matching these class names or executables will automatically float centered.</p>
+            <p>Windows matching these class names or executables will spawn as centered layers.</p>
           </div>
         </div>
 
@@ -337,87 +230,41 @@
         <div class="card-headline">
           <span class="card-step">05</span>
           <div>
-            <h2>Custom Keybindings</h2>
-            <p>Define hotkeys for navigation, workspace hopping, monitors and window state controls.</p>
+            <h2>Ergonomic Keybindings</h2>
+            <p>Global keyboard hooks registered directly through Win32 APIs.</p>
           </div>
         </div>
 
         <div class="binds-grid" id="binds-container"></div>
-      </section>
-
-      <section id="launcher" class="param-card">
-        <div class="card-headline">
-          <span class="card-step">06</span>
-          <div>
-            <h2>Application Launcher</h2>
-            <p>Configure quick-launch applications triggered by Alt+Space with optional flags and paths.</p>
-          </div>
-        </div>
-
-        <div class="app-input-row">
-          <input type="text" id="app-name" placeholder="Title (e.g. Neovim)">
-          <input type="text" id="app-path" placeholder="Path or binary (e.g. wt.exe)">
-          <input type="text" id="app-args" placeholder="Arguments (e.g. -p PowerShell)">
-          <button id="btn-add-app" class="btn btn-secondary">Add App</button>
-        </div>
-
-        <div class="apps-list" id="apps-container"></div>
       </section>
     </div>
 
     <aside class="preview-column">
       <div class="preview-panel">
         <div class="panel-header">
-          <span class="panel-title">Realtime Canvas Preview</span>
+          <div class="panel-tag-group">
+            <span class="panel-indicator"></span>
+            <span class="panel-title">Interactive Ribbon Preview</span>
+          </div>
           <div class="panel-actions">
-            <button id="toggle-active-btn" class="pill pill-active">Active Focused</button>
+            <button id="btn-add-window" class="sim-pill">+ Add Window</button>
+            <button id="btn-cycle-col-width" class="sim-pill">Resize Column</button>
           </div>
         </div>
 
-        <div class="mock-display" id="mock-display">
-          <div class="mock-screen" id="mock-screen">
-            <div class="mock-col mock-col-left" id="mock-col-1">
-              <div class="mock-window" id="win-mock-1">
-                <div class="mock-titlebar">
-                  <span class="mock-btn-dot"></span>
-                  <span class="mock-text">nvim main.lua</span>
-                </div>
-                <div class="mock-content">
-                  <span class="code-line w-60"></span>
-                  <span class="code-line w-80"></span>
-                  <span class="code-line w-40"></span>
-                </div>
-              </div>
-            </div>
+        <div class="mock-stage" id="mock-stage">
+          <div class="mock-track" id="mock-track"></div>
+        </div>
 
-            <div class="mock-col mock-col-right" id="mock-col-2">
-              <div class="mock-window" id="win-mock-2">
-                <div class="mock-titlebar">
-                  <span class="mock-btn-dot"></span>
-                  <span class="mock-text">pwsh terminal</span>
-                </div>
-                <div class="mock-content">
-                  <span class="code-line w-75"></span>
-                  <span class="code-line w-50"></span>
-                </div>
-              </div>
-              <div class="mock-window" id="win-mock-3">
-                <div class="mock-titlebar">
-                  <span class="mock-btn-dot"></span>
-                  <span class="mock-text">build task</span>
-                </div>
-                <div class="mock-content">
-                  <span class="code-line w-30"></span>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="preview-hud">
+          <span id="hud-stats">Column 1 of 3 (66%)</span>
+          <span class="hud-hint">Drag track or click windows to focus</span>
         </div>
 
         <div class="output-box">
           <div class="output-header">
             <span>Generated Lua Output</span>
-            <span class="output-tag">Live</span>
+            <span class="output-tag">Live Sync</span>
           </div>
           <pre class="lua-display"><code id="lua-code"></code></pre>
         </div>
