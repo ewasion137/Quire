@@ -3,260 +3,311 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuireTWM - Scrollable Tiling for Windows</title>
+  <title>QuireTWM | Ribbon Tiling Engine for Windows</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="ambient-glow"></div>
+  <div class="glow-surface"></div>
 
-  <header class="nav-wrapper">
+  <header class="nav-shell">
     <nav class="nav-bar">
-      <div class="logo">
-        <span class="logo-mark"></span>
-        <span class="logo-text">Quire</span>
+      <div class="brand">
+        <span class="brand-glyph"></span>
+        <span class="brand-title">QuireTWM</span>
+        <span class="brand-tag">v1.4</span>
       </div>
       <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#demo">Ribbon Demo</a>
-        <a href="page2.html">Config Builder</a>
-        <a href="#shortcuts">Shortcuts</a>
+        <a href="#features">Architecture</a>
+        <a href="#demo">Live Sandbox</a>
+        <a href="page2.html">Config Studio</a>
+        <a href="#shortcuts">Keymap</a>
       </div>
       <div class="nav-actions">
-        <a href="https://github.com/ewasion137/QuireTWM" target="_blank" class="btn btn-ghost">GitHub</a>
-        <a href="https://github.com/ewasion137/QuireTWM/releases/" class="btn btn-primary">Download</a>
+        <a href="https://github.com/ewasion137/QuireTWM" target="_blank" class="btn btn-ghost">Source</a>
+        <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn btn-primary">Download x64</a>
       </div>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-      <div class="badge">
-        <span class="badge-dot"></span>
-        <span>Built for Windows 10 and 11</span>
+      <div class="telemetry-pill">
+        <span class="telemetry-dot"></span>
+        <span>Win32 Native &bull; C++20 Core &bull; Lua 5.4</span>
       </div>
       <h1 class="hero-title">
-        The infinite ribbon window manager.
+        The infinite horizontal ribbon window manager.
       </h1>
       <p class="hero-desc">
-        Fast C++20 core, Direct2D hardware overlay and pure Lua 5.4 scripting. Windows glide along a fluid horizontal ribbon backed by sub-stepped numerical springs.
+        Direct2D hardware acceleration, numerical sub-stepped springs and zero memory bloat. Windows glide on an uninterrupted spatial workspace.
       </p>
-      <div class="hero-cta">
-        <a href="#download" class="btn btn-primary btn-large">Get QuireTWM</a>
-        <button class="btn btn-secondary btn-large copy-btn" data-copy="git clone https://github.com/ewasion137/QuireTWM.git">
-          <span class="cmd-icon">$</span>
+      <div class="hero-actions">
+        <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn btn-primary btn-lg">Install QuireTWM</a>
+        <button class="btn btn-secondary btn-lg copy-btn" data-copy="git clone https://github.com/ewasion137/QuireTWM.git">
+          <span class="mono-prefix">$</span>
           <code>git clone quire.git</code>
-          <span class="copy-status">Copy</span>
+          <span class="copy-tag">Copy</span>
         </button>
       </div>
     </section>
 
-    <section id="demo" class="demo-section">
-      <div class="demo-header">
-        <div class="demo-status">
-          <span class="pill pill-active">Workspace 1</span>
-          <span class="pill" id="viewport-stats">Column 2/4 (66%)</span>
+    <section id="demo" class="demo-wrap">
+      <div class="panel-bar">
+        <div class="panel-left">
+          <div class="tab-indicator">
+            <span class="tab-dot active"></span>
+            <span class="mono">WORKSPACE 1</span>
+          </div>
+          <div class="telemetry-chip" id="cam-telemetry">
+            OFFSET: <span id="stat-offset">0px</span> | COLUMN: <span id="stat-col">1/4</span> | RATIO: <span id="stat-ratio">100%</span>
+          </div>
         </div>
-        <div class="demo-controls">
-          <button class="sim-btn" id="btn-left">&larr; Left</button>
-          <button class="sim-btn" id="btn-preset">Cycle Width</button>
-          <button class="sim-btn" id="btn-right">Right &rarr;</button>
-        </div>
-      </div>
-
-      <div class="viewport-stage" id="stage">
-        <div class="ribbon-track" id="track">
-          <div class="column col-large" data-col="1">
-            <div class="win-card active">
-              <div class="card-bar">
-                <span class="win-dot"></span>
-                <span class="card-title">main.cpp - Visual Studio</span>
-              </div>
-              <div class="card-body">
-                <pre><code>SetWinEventHook(EVENT_OBJECT_CREATE, ...);
-InitializeAltTabHook();
-IPCServerThread();</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <div class="column col-medium" data-col="2">
-            <div class="win-card">
-              <div class="card-bar">
-                <span class="win-dot"></span>
-                <span class="card-title">Windows Terminal</span>
-              </div>
-              <div class="card-body">
-                <pre><code>pwsh> .\quirectl.ps1 focus right
-OK - camera shifted 840px</code></pre>
-              </div>
-            </div>
-            <div class="win-card">
-              <div class="card-bar">
-                <span class="win-dot"></span>
-                <span class="card-title">PowerShell</span>
-              </div>
-              <div class="card-body">
-                <pre><code>CPU: 1.2% | RAM: 32MB | D2D: 144Hz</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <div class="column col-medium" data-col="3">
-            <div class="win-card">
-              <div class="card-bar">
-                <span class="win-dot"></span>
-                <span class="card-title">Discord</span>
-              </div>
-              <div class="card-body">
-                <div class="skeleton-block"></div>
-                <div class="skeleton-line"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="column col-large" data-col="4">
-            <div class="win-card">
-              <div class="card-bar">
-                <span class="win-dot"></span>
-                <span class="card-title">Edge DevTools</span>
-              </div>
-              <div class="card-body">
-                <div class="skeleton-grid"></div>
-              </div>
-            </div>
-          </div>
+        <div class="panel-right">
+          <button class="sim-pill" id="sim-prev">&larr; Alt+H</button>
+          <button class="sim-pill" id="sim-cycle">Preset (Alt+D)</button>
+          <button class="sim-pill" id="sim-next">Alt+L &rarr;</button>
+          <button class="sim-pill special" id="sim-scratch">Scratchpad (~)</button>
+          <button class="sim-pill special" id="sim-launcher">Launcher (Space)</button>
         </div>
       </div>
-      <p class="demo-tip">Interactive simulator. Use the buttons or press Left, Right and Space.</p>
+
+      <div class="stage-frame" id="stage">
+        <div class="scratchpad-overlay" id="sim-scratchpad-panel">
+          <div class="window-bar">
+            <span class="dot-btn red"></span>
+            <span class="dot-btn yellow"></span>
+            <span class="dot-btn green"></span>
+            <span class="bar-title">alacritty &mdash; scratchpad terminal</span>
+          </div>
+          <div class="window-content terminal-font">
+            <div class="term-line"><span class="term-user">quire@engine</span>:<span class="term-dir">~</span>$ quirectl status</div>
+            <div class="term-line text-dim">Rendering pipeline: Direct2D 1.1 Hardware Target</div>
+            <div class="term-line text-dim">Active monitors: 1 (2560x1440 @ 165Hz)</div>
+            <div class="term-line"><span class="term-user">quire@engine</span>:<span class="term-dir">~</span>$ <span class="term-cursor"></span></div>
+          </div>
+        </div>
+
+        <div class="launcher-overlay" id="sim-launcher-panel">
+          <div class="launcher-search">
+            <span class="mono-prefix">&gt;</span>
+            <input type="text" id="launcher-filter" placeholder="Search executable or command..." readonly value="Windows Terminal">
+          </div>
+          <div class="launcher-results">
+            <div class="launcher-item active"><span class="item-title">Windows Terminal</span><span class="item-path">wt.exe</span></div>
+            <div class="launcher-item"><span class="item-title">Visual Studio Code</span><span class="item-path">code.exe</span></div>
+            <div class="launcher-item"><span class="item-title">Neovim Core</span><span class="item-path">nvim.exe</span></div>
+          </div>
+        </div>
+
+        <div class="track" id="track">
+          <div class="col col-lg" data-col="1">
+            <div class="window-box active">
+              <div class="window-bar">
+                <span class="dot-status"></span>
+                <span class="bar-title">main.cpp &mdash; QuireTWM Core</span>
+              </div>
+              <div class="window-content">
+                <pre class="code-view"><code>SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+SetWinEventHook(EVENT_OBJECT_CREATE, EVENT_OBJECT_NAMECHANGE, ...);
+std::thread(IPCServerThread).detach();
+std::thread(ConfigWatcherThread, configDir).detach();</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-md" data-col="2">
+            <div class="window-box">
+              <div class="window-bar">
+                <span class="dot-status"></span>
+                <span class="bar-title">quirectl &mdash; PowerShell 7</span>
+              </div>
+              <div class="window-content">
+                <pre class="code-view"><code>PS &gt; .\quirectl.ps1 focus right
+Camera target shifted to offset 1240px
+Sub-stepped springs resolved in 14.2ms</code></pre>
+              </div>
+            </div>
+            <div class="window-box">
+              <div class="window-bar">
+                <span class="dot-status"></span>
+                <span class="bar-title">Resource Telemetry</span>
+              </div>
+              <div class="window-content">
+                <div class="stat-grid">
+                  <div class="stat-card">
+                    <span class="stat-label">CPU CORE</span>
+                    <span class="stat-val">0.4%</span>
+                  </div>
+                  <div class="stat-card">
+                    <span class="stat-label">RAM USAGE</span>
+                    <span class="stat-val">18.4 MB</span>
+                  </div>
+                  <div class="stat-card">
+                    <span class="stat-label">D2D FPS</span>
+                    <span class="stat-val">165 Hz</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-md" data-col="3">
+            <div class="window-box">
+              <div class="window-bar">
+                <span class="dot-status"></span>
+                <span class="bar-title">discord &mdash; engineering</span>
+              </div>
+              <div class="window-content layout-skel">
+                <div class="skel-row">
+                  <div class="skel-avatar"></div>
+                  <div class="skel-lines">
+                    <div class="skel-bar w-50"></div>
+                    <div class="skel-bar w-80"></div>
+                  </div>
+                </div>
+                <div class="skel-row">
+                  <div class="skel-avatar"></div>
+                  <div class="skel-lines">
+                    <div class="skel-bar w-40"></div>
+                    <div class="skel-bar w-60"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col col-lg" data-col="4">
+            <div class="window-box">
+              <div class="window-bar">
+                <span class="dot-status"></span>
+                <span class="bar-title">Edge DevTools &mdash; Trace Profiler</span>
+              </div>
+              <div class="window-content">
+                <div class="canvas-chart">
+                  <div class="chart-col h-40"></div>
+                  <div class="chart-col h-60"></div>
+                  <div class="chart-col h-50"></div>
+                  <div class="chart-col h-90"></div>
+                  <div class="chart-col h-70"></div>
+                  <div class="chart-col h-30"></div>
+                  <div class="chart-col h-80"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span>Click columns or use Alt+H / Alt+L to glide. Drag ribbon with mouse pointer to scrub.</span>
+      </div>
     </section>
 
-    <section id="features" class="features-section">
-      <div class="section-heading">
-        <h2>Engineered for deep focus</h2>
-        <p>Zero electron bloat. Native Win32 performance with modern design polish.</p>
+    <section id="features" class="grid-section">
+      <div class="section-title">
+        <h2>Engineered for Deep Multitasking</h2>
+        <p>Direct Win32 APIs, sub-stepped physics integration and hardware-composited HUD.</p>
       </div>
 
-      <div class="bento-grid">
-        <div class="bento-card spotlight-card">
-          <div class="card-content">
-            <div class="bento-tag">Physics Engine</div>
-            <h3>Sub-Stepped Spring Math</h3>
-            <p>Every camera glide and window resize runs through numerical spring calculations with custom stiffness, damping and mass.</p>
+      <div class="bento">
+        <div class="card">
+          <div class="card-head">
+            <span class="card-kicker">PHYSICS KINEMATICS</span>
+            <h3>Sub-Stepped Spring Solver</h3>
           </div>
+          <p>Numerical 4-step Euler integration executes per frame. Zero sudden teleports, zero dropped frames on high-refresh panels.</p>
         </div>
 
-        <div class="bento-card spotlight-card">
-          <div class="card-content">
-            <div class="bento-tag">Graphics</div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-kicker">DIRECTX ENGINE</span>
             <h3>Direct2D Native Overlay</h3>
-            <p>Renders active borders, workspaces HUD and task cards straight to the display plane without lagging your inputs.</p>
+            <p>Borders, idle glow states, Alt+Tab previews and launchers are hardware rendered via DirectWrite and Direct2D surfaces.</p>
           </div>
         </div>
 
-        <div class="bento-card spotlight-card">
-          <div class="card-content">
-            <div class="bento-tag">Scriptability</div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-kicker">EXTENSIBILITY</span>
             <h3>Pure Lua 5.4 Runtime</h3>
-            <p>Bind custom key combos, script workspace events and build external tools through the high-speed named pipe IPC.</p>
+            <p>Hotkeys, layout logic, custom window hooks and launcher scripts execute in a sandbox with instant file-watcher reloading.</p>
           </div>
         </div>
 
-        <div class="bento-card spotlight-card">
-          <div class="card-content">
-            <div class="bento-tag">Stability</div>
-            <h3>Zero Window Bleed</h3>
-            <p>Safe coordinates parking keeps background apps alive without losing size, opacity or desktop position on exit.</p>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-kicker">PROCESS SAFETY</span>
+            <h3>Coordinate Parking</h3>
+            <p>Offscreen clients are cloaked with DwmSetWindowAttribute and safely restored on exit without corrupting window coordinates.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="shortcuts" class="shortcuts-section">
-      <div class="section-heading">
-        <h2>Keybindings Reference</h2>
-        <p>Ergonomic keys designed for fast keyboard navigation.</p>
+    <section id="shortcuts" class="table-section">
+      <div class="section-title">
+        <h2>Ergonomic Keybindings</h2>
+        <p>Low-latency navigation bindings pre-configured in config.lua</p>
       </div>
 
-      <div class="table-wrap">
-        <table class="keys-table">
+      <div class="table-box">
+        <table class="key-table">
           <thead>
             <tr>
-              <th>Combination</th>
-              <th>Action</th>
-              <th>Scope</th>
+              <th>BIND</th>
+              <th>ACTION</th>
+              <th>SUBSYSTEM</th>
             </tr>
           </thead>
-        <tbody>
+          <tbody>
             <tr>
               <td><kbd>Alt</kbd> + <kbd>H</kbd> / <kbd>L</kbd></td>
-              <td>Shift focus left or right across columns</td>
-              <td>Ribbon</td>
+              <td>Glide camera to left / right column</td>
+              <td>Camera Ribbon</td>
             </tr>
             <tr>
               <td><kbd>Alt</kbd> + <kbd>K</kbd> / <kbd>J</kbd></td>
-              <td>Focus up or down in column stack</td>
-              <td>Stack</td>
+              <td>Cycle window focus within active column stack</td>
+              <td>Stack Engine</td>
             </tr>
             <tr>
               <td><kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> / <kbd>L</kbd></td>
-              <td>Swap column position</td>
-              <td>Ribbon</td>
-            </tr>
-            <tr>
-              <td><kbd>Alt</kbd> + <kbd>Q</kbd> / <kbd>E</kbd></td>
-              <td>Switch to previous or next workspace</td>
-              <td>Workspaces</td>
-            </tr>
-            <tr>
-              <td><kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>H</kbd> / <kbd>L</kbd></td>
-              <td>Transfer focused window between monitors</td>
-              <td>Multi-head</td>
+              <td>Swap column order horizontally</td>
+              <td>Ribbon Topology</td>
             </tr>
             <tr>
               <td><kbd>Alt</kbd> + <kbd>D</kbd></td>
-              <td>Cycle width ratio (100% / 66% / 50%)</td>
-              <td>Column</td>
+              <td>Cycle width ratio: 100% &bull; 66% &bull; 50%</td>
+              <td>Viewport Resizer</td>
+            </tr>
+            <tr>
+              <td><kbd>Alt</kbd> + <kbd>~</kbd></td>
+              <td>Toggle drop-down scratchpad terminal</td>
+              <td>Scratchpad</td>
             </tr>
             <tr>
               <td><kbd>Alt</kbd> + <kbd>Space</kbd></td>
-              <td>Toggle application launcher</td>
-              <td>Global</td>
-            </tr>
-            <tr>
-              <td><kbd>Alt</kbd> + <kbd>1..9</kbd></td>
-              <td>Direct switch to workspace number</td>
-              <td>Workspaces</td>
+              <td>Spawn native application launcher</td>
+              <td>Launcher</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
-
-    <section id="download" class="download-section">
-      <div class="download-card spotlight-card">
-        <h2>Ready for fluid multitasking?</h2>
-        <p>Free, open source under MIT and ready to compile for Windows 10 and 11.</p>
-        <div class="download-buttons">
-          <a href="https://github.com/ewasion137/QuireTWM/releases" class="btn btn-primary btn-large">Download Release</a>
-          <a href="page2.html" class="btn btn-secondary btn-large">Config Builder</a>
-        </div>
-      </div>
-    </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-body">
-      <div class="footer-brand">
-        <span class="logo-mark"></span>
-        <span>QuireTWM &copy; 2026</span>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="brand-glyph"></span>
+        <span>QuireTWM &bull; Built with C++20 and Lua</span>
       </div>
       <div class="footer-links">
         <a href="https://github.com/ewasion137/QuireTWM">GitHub</a>
-        <a href="page2.html">Documentation</a>
-        <a href="#">License</a>
+        <a href="page2.html">Config Studio</a>
+        <a href="https://github.com/ewasion137/QuireTWM/blob/main/LICENSE">MIT License</a>
       </div>
     </div>
   </footer>
