@@ -3,6 +3,365 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuireTWM Config Studio & Runtime Tuner</title>
+  <link rel="stylesheet" href="pstyle2.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="glow-surface"></div>
+
+  <header class="nav-shell">
+    <nav class="nav-bar">
+      <div class="brand">
+        <a href="index.html" class="brand-link">
+          <span class="brand-glyph"></span>
+          <span class="brand-title">Quire</span>
+        </a>
+        <span class="brand-tag">Studio</span>
+      </div>
+      <div class="nav-links">
+        <a href="#geometry">Geometry</a>
+        <a href="#palette">Direct2D Theme</a>
+        <a href="#springs">Physics Solver</a>
+        <a href="#rules">Rules</a>
+        <a href="#keybinds">Hotkeys</a>
+      </div>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-ghost">Overview</a>
+        <button id="copy-lua-btn" class="btn btn-primary">Copy config.lua</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="studio-layout">
+    <section class="controls-column">
+      <div class="studio-header">
+        <h1>Runtime Tuner</h1>
+        <p>Interactive parameter adjustments update the canvas and generate copy-pasteable <code>config.lua</code>.</p>
+      </div>
+
+      <div class="group-card" id="geometry">
+        <div class="group-title">
+          <span class="group-num">01</span>
+          <div>
+            <h2>Grid & Boundary Geometry</h2>
+            <p>Direct2D screen margins, inner column gutters and corner radius.</p>
+          </div>
+        </div>
+
+        <div class="dial-grid">
+          <div class="tactile-dial" data-param="gapsOut" data-min="0" data-max="40" data-step="1" data-val="14" data-unit="px">
+            <div class="dial-meta">
+              <span class="dial-name">Outer Margin</span>
+              <span class="dial-hint">gaps_out</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">14</span><span class="dial-unit">px</span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="gapsIn" data-min="0" data-max="32" data-step="1" data-val="8" data-unit="px">
+            <div class="dial-meta">
+              <span class="dial-name">Inner Gap</span>
+              <span class="dial-hint">gaps_in</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">8</span><span class="dial-unit">px</span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="rounding" data-min="0" data-max="24" data-step="1" data-val="10" data-unit="px">
+            <div class="dial-meta">
+              <span class="dial-name">Corner Rounding</span>
+              <span class="dial-hint">rounding</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">10</span><span class="dial-unit">px</span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="borderSize" data-min="1" data-max="6" data-step="1" data-val="2" data-unit="px">
+            <div class="dial-meta">
+              <span class="dial-name">Border Stroke</span>
+              <span class="dial-hint">border_size</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">2</span><span class="dial-unit">px</span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-card" id="palette">
+        <div class="group-title">
+          <span class="group-num">02</span>
+          <div>
+            <h2>Direct2D Visual Style</h2>
+            <p>Normalized hardware colors and DirectWrite font stack.</p>
+          </div>
+        </div>
+
+        <div class="font-row">
+          <label for="select-font">Typography Engine Font</label>
+          <select id="select-font" class="native-select">
+            <option value="Segoe UI Variable" selected>Segoe UI Variable (Native Win11)</option>
+            <option value="Segoe UI">Segoe UI</option>
+            <option value="Cascadia Code">Cascadia Code</option>
+            <option value="JetBrains Mono">JetBrains Mono</option>
+            <option value="Consolas">Consolas</option>
+          </select>
+        </div>
+
+        <div class="color-palette-grid">
+          <div class="color-chip">
+            <div class="chip-preview" id="preview-col-active"></div>
+            <div class="chip-details">
+              <span class="chip-label">Active Border</span>
+              <input type="color" id="col-active" value="#8bb4fa">
+              <span class="chip-hex" id="hex-active">#8bb4fa</span>
+            </div>
+          </div>
+
+          <div class="color-chip">
+            <div class="chip-preview" id="preview-col-inactive"></div>
+            <div class="chip-details">
+              <span class="chip-label">Inactive Border</span>
+              <input type="color" id="col-inactive" value="#313445">
+              <span class="chip-hex" id="hex-inactive">#313445</span>
+            </div>
+          </div>
+
+          <div class="color-chip">
+            <div class="chip-preview" id="preview-col-bg"></div>
+            <div class="chip-details">
+              <span class="chip-label">Canvas Base</span>
+              <input type="color" id="col-bg" value="#0d0e14">
+              <span class="chip-hex" id="hex-bg">#0d0e14</span>
+            </div>
+          </div>
+
+          <div class="color-chip">
+            <div class="chip-preview" id="preview-col-text"></div>
+            <div class="chip-details">
+              <span class="chip-label">Text Primary</span>
+              <input type="color" id="col-text" value="#e6e8ee">
+              <span class="chip-hex" id="hex-text">#e6e8ee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-card" id="springs">
+        <div class="group-title">
+          <span class="group-num">03</span>
+          <div>
+            <h2>Numerical Spring Physics</h2>
+            <p>Sub-stepped mass-spring-damper math executed on camera translation.</p>
+          </div>
+        </div>
+
+        <div class="dial-grid">
+          <div class="tactile-dial" data-param="stiffness" data-min="50" data-max="320" data-step="5" data-val="160" data-unit="">
+            <div class="dial-meta">
+              <span class="dial-name">Stiffness (k)</span>
+              <span class="dial-hint">Pull force</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">160</span><span class="dial-unit"></span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="damping" data-min="10" data-max="50" data-step="1" data-val="22" data-unit="">
+            <div class="dial-meta">
+              <span class="dial-name">Damping (d)</span>
+              <span class="dial-hint">Resistance</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">22</span><span class="dial-unit"></span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="mass" data-min="0.5" data-max="3.0" data-step="0.1" data-val="1.0" data-unit="" data-float="true">
+            <div class="dial-meta">
+              <span class="dial-name">Virtual Mass</span>
+              <span class="dial-hint">Inertia</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">1.0</span><span class="dial-unit"></span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+
+          <div class="tactile-dial" data-param="moveDuration" data-min="0.10" data-max="0.80" data-step="0.02" data-val="0.28" data-unit="s" data-float="true">
+            <div class="dial-meta">
+              <span class="dial-name">Duration</span>
+              <span class="dial-hint">Easing length</span>
+            </div>
+            <div class="dial-display">
+              <span class="dial-num">0.28</span><span class="dial-unit">s</span>
+            </div>
+            <div class="dial-tape">
+              <div class="dial-ticks"></div>
+              <div class="dial-cursor"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="options-flex">
+          <div class="opt-col">
+            <label for="select-idle">Active Border Idle</label>
+            <select id="select-idle" class="native-select">
+              <option value="pulse" selected>Pulse (Sine alpha)</option>
+              <option value="heartbeat">Heartbeat</option>
+              <option value="flash">Flash burst</option>
+              <option value="wobble">Wobble</option>
+              <option value="shake">Shake</option>
+            </select>
+          </div>
+
+          <div class="opt-col">
+            <label for="select-easing">Camera Transfer Curve</label>
+            <select id="select-easing" class="native-select">
+              <option value="back" selected>Back Overshoot</option>
+              <option value="linear">Linear</option>
+              <option value="ease_in">Ease In</option>
+              <option value="ease_out">Ease Out</option>
+              <option value="ease_in_out">Ease In-Out</option>
+              <option value="bounce">Bounce</option>
+              <option value="elastic">Elastic</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="spring-run-bar">
+          <button id="btn-trigger-spring" class="btn btn-secondary">Simulate Impulse Spring</button>
+        </div>
+      </div>
+
+      <div class="group-card" id="rules">
+        <div class="group-title">
+          <span class="group-num">04</span>
+          <div>
+            <h2>Floating Application Rules</h2>
+            <p>Matching process names or window classes will bypass tiling.</p>
+          </div>
+        </div>
+
+        <div class="inline-adder">
+          <input type="text" id="input-new-rule" placeholder="Binary or window class (e.g. Spotify.exe)">
+          <button id="btn-add-rule" class="btn btn-secondary">Add Rule</button>
+        </div>
+        <div class="tag-pool" id="rules-container"></div>
+      </div>
+
+      <div class="group-card" id="keybinds">
+        <div class="group-title">
+          <span class="group-num">05</span>
+          <div>
+            <h2>Hotkeys Matrix</h2>
+            <p>Low-level keyboard hook registrations.</p>
+          </div>
+        </div>
+        <div class="keymap-grid" id="binds-container"></div>
+      </div>
+    </section>
+
+    <aside class="viewport-column">
+      <div class="sticky-preview">
+        <div class="preview-header">
+          <span class="mono-tag">LIVE D2D SURFACE TEST</span>
+          <div class="preview-actions">
+            <button id="toggle-active-btn" class="pill pill-active">Focused: Window 1</button>
+          </div>
+        </div>
+
+        <div class="canvas-mock" id="mock-canvas">
+          <div class="mock-workspace" id="mock-screen">
+            <div class="mock-column mock-col-left" id="mock-col-1">
+              <div class="mock-card active" id="win-mock-1">
+                <div class="mock-card-bar">
+                  <span class="mock-dot"></span>
+                  <span class="mock-label">nvim core.lua</span>
+                </div>
+                <div class="mock-lines">
+                  <div class="code-line w-60"></div>
+                  <div class="code-line w-80"></div>
+                  <div class="code-line w-40"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mock-column mock-col-right" id="mock-col-2">
+              <div class="mock-card" id="win-mock-2">
+                <div class="mock-card-bar">
+                  <span class="mock-dot"></span>
+                  <span class="mock-label">pwsh console</span>
+                </div>
+                <div class="mock-lines">
+                  <div class="code-line w-75"></div>
+                  <div class="code-line w-50"></div>
+                </div>
+              </div>
+              <div class="mock-card" id="win-mock-3">
+                <div class="mock-card-bar">
+                  <span class="mock-dot"></span>
+                  <span class="mock-label">build output</span>
+                </div>
+                <div class="mock-lines">
+                  <div class="code-line w-30"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lua-dock">
+          <div class="dock-head">
+            <span>config.lua</span>
+            <span class="mono-badge">SYNCHRONIZED</span>
+          </div>
+          <pre class="lua-body"><code id="lua-code"></code></pre>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="preview.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuireTWM | Ribbon Tiling Engine for Windows</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
